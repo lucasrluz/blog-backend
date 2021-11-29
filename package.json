@@ -1,0 +1,8 @@
+{
+  "name": "blog-backend",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "repository": "https://github.com/lucasrluz/blog-backend.git",
+  "author": "lucasrluz <lucasr.luzbr@gmail.com>",
+  "license": "MIT"
+}
