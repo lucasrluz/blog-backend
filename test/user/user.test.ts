@@ -48,4 +48,30 @@ describe('User route', () => {
       await prisma.user.deleteMany();
     });
   });
+
+  describe('/user/:username (GET)', () => {
+    it('Should return user', async () => {
+      await request(app).post('/user').send(users[0]);
+
+      const findUserResponse = await request(app).get(
+        `/user/${users[0].username}`,
+      );
+
+      expect(findUserResponse.status).toEqual(200);
+      expect(findUserResponse.body.object).toEqual({
+        username: users[0].username,
+      });
+
+      await prisma.user.deleteMany();
+    });
+
+    it('Should not return user', async () => {
+      const findUserResponse = await request(app).get(
+        `/user/${users[0].username}`,
+      );
+
+      expect(findUserResponse.status).toEqual(404);
+      expect(findUserResponse.body.message).toEqual('User not found');
+    });
+  });
 });
