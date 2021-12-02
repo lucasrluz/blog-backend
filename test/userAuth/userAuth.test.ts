@@ -63,4 +63,36 @@ describe('User auth route', () => {
       await prisma.user.deleteMany();
     });
   });
+
+  describe('/user/:user_id (PUT) (middleware)', () => {
+    it('Should return message of token invalid', async () => {
+      const userData = {
+        username: users[0].username,
+        password: users[0].password,
+      };
+
+      await request(app).post('/user').send(users[0]);
+
+      const saveUserResponse2 = await request(app).post('/user').send(users[1]);
+
+      const userId = saveUserResponse2.body.object.id;
+
+      const username = users[0].username;
+      const password = users[0].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const token = authenticateUserResponse.body.object.token;
+
+      const editUserResponse = await request(app)
+        .put(`/user/${userId}`)
+        .auth(token, { type: 'bearer' })
+        .send(userData);
+
+      expect(editUserResponse.status).toEqual(400);
+      expect(editUserResponse.body.message).toEqual('Token invalid');
+    });
+  });
 });
