@@ -93,6 +93,8 @@ describe('User auth route', () => {
 
       expect(editUserResponse.status).toEqual(400);
       expect(editUserResponse.body.message).toEqual('Token invalid');
+
+      await prisma.user.deleteMany();
     });
   });
 });
