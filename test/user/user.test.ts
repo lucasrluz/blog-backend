@@ -74,4 +74,75 @@ describe('User route', () => {
       expect(findUserResponse.body.message).toEqual('User not found');
     });
   });
+
+  describe('/user/:user_id (PUT)', () => {
+    it('Should return edited user', async () => {
+      const userData = {
+        username: users[1].username,
+        password: users[1].password,
+      };
+
+      const saveUserResponse = await request(app).post('/user').send(users[0]);
+
+      const userId = saveUserResponse.body.object.id;
+
+      const username = users[0].username;
+      const password = users[0].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const token = authenticateUserResponse.body.object.token;
+
+      const editUserResponse = await request(app)
+        .put(`/user/${userId}`)
+        .auth(token, { type: 'bearer' })
+        .send(userData);
+
+      expect(editUserResponse.status).toEqual(200);
+      expect(editUserResponse.body.message).toEqual('Successfully edited user');
+      expect(editUserResponse.body.object).toEqual({
+        id: userId,
+        username: userData.username,
+        email: users[0].email,
+      });
+
+      await prisma.user.deleteMany();
+    });
+
+    it('Should not edited user', async () => {
+      const userData = {
+        username: users[0].username,
+        password: users[0].password,
+      };
+
+      await request(app).post('/user').send(users[0]);
+
+      const saveUserResponse = await request(app).post('/user').send(users[1]);
+
+      const userId = saveUserResponse.body.object.id;
+
+      const username = users[1].username;
+      const password = users[1].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const token = authenticateUserResponse.body.object.token;
+
+      const editUserResponse = await request(app)
+        .put(`/user/${userId}`)
+        .auth(token, { type: 'bearer' })
+        .send(userData);
+
+      expect(editUserResponse.status).toEqual(400);
+      expect(editUserResponse.body.message).toEqual(
+        'This username is already in use',
+      );
+
+      await prisma.user.deleteMany();
+    });
+  });
 });
