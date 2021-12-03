@@ -158,5 +158,33 @@ export function executeUserTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/user/:user_id (DELETE)', () => {
+      it('Should deleted user', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const username = users[0].username;
+        const password = users[0].password;
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const deleteUserResponse = await request(app)
+          .delete(`/user/${userId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(deleteUserResponse.status).toEqual(200);
+        expect(deleteUserResponse.body.message).toEqual(
+          'User deleted successfully',
+        );
+      });
+    });
   });
 }
