@@ -3,7 +3,7 @@ import { app } from '../../src/app';
 import { prisma } from '../../src/prisma/prisma';
 import { users } from '../user/data/users';
 import { sleep } from './methods/sleep';
-import { validateToken } from './validateToken/validateToken';
+import { validateToken } from './methods/validateToken';
 
 export function executeUserAuthTests() {
   describe('User auth route', () => {
