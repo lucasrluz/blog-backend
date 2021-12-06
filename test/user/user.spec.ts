@@ -119,6 +119,7 @@ export function executeUserTests() {
           email: users[0].email,
         });
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
 
@@ -155,6 +156,7 @@ export function executeUserTests() {
           'This username is already in use',
         );
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
     });
@@ -175,6 +177,8 @@ export function executeUserTests() {
           .send({ username, password });
 
         const token = authenticateUserResponse.body.object.token;
+
+        await prisma.refreshToken.deleteMany();
 
         const deleteUserResponse = await request(app)
           .delete(`/user/${userId}`)
