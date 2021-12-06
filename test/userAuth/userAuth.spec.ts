@@ -28,6 +28,7 @@ export function executeUserAuthTests() {
 
         expect(tokenValidation).toEqual('Token valid');
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
 
@@ -46,6 +47,7 @@ export function executeUserAuthTests() {
           'Username or password incorrect',
         );
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
 
@@ -64,6 +66,7 @@ export function executeUserAuthTests() {
           'Username or password incorrect',
         );
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
     });
@@ -100,6 +103,7 @@ export function executeUserAuthTests() {
         expect(editUserResponse.status).toEqual(400);
         expect(editUserResponse.body.message).toEqual('Token invalid');
 
+        await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
     });
