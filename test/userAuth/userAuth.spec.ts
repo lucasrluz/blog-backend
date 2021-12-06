@@ -168,6 +168,7 @@ export function executeUserAuthTests() {
         expect(oldRefreshToken).not.toEqual(newRefreshToken);
 
         await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
       });
 
       it('Should not return refresh token', async () => {
