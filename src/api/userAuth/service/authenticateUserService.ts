@@ -2,6 +2,8 @@ import { compare } from 'bcrypt';
 import { generateToken } from '../../../providers/generateToken';
 import { createResponse } from '../../../response/createResponse';
 import { findUserByUsernameRepository } from '../../user/repositories/findUserByUsernameRepository';
+import { deleteRefreshTokenRepository } from '../repositories/deleteRefreshTokenRepository';
+import { generateRefreshTokenRepository } from '../repositories/generateRefreshTokenRepository';
 
 export async function authenticateUserService(
   username: string,
@@ -19,5 +21,9 @@ export async function authenticateUserService(
 
   const token = generateToken(existingUser.id);
 
-  return createResponse(200, { object: { token } });
+  await deleteRefreshTokenRepository(existingUser.id);
+
+  const refreshToken = await generateRefreshTokenRepository(existingUser.id);
+
+  return createResponse(200, { object: { token, refreshToken } });
 }
