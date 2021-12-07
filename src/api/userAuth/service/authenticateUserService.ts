@@ -9,6 +9,12 @@ export async function authenticateUserService(
   username: string,
   password: string,
 ) {
+  if (!username)
+    return createResponse(400, { message: 'username should not be empty' });
+
+  if (!password)
+    return createResponse(400, { message: 'password should not be empty' });
+
   const existingUser = await findUserByUsernameRepository(username);
 
   if (!existingUser)
