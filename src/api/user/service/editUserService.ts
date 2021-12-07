@@ -9,6 +9,12 @@ export async function editUserService(
 ) {
   const { username, password } = data;
 
+  if (!username)
+    return createResponse(400, { message: 'username should not be empty' });
+
+  if (!password)
+    return createResponse(400, { message: 'password should not be empty' });
+
   const existingUser = await findUserByUsernameAndIdRepository(
     username,
     userId,
