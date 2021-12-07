@@ -21,4 +21,24 @@ export const users: IUser[] = [
     email: 'a@gmail.com',
     password: 'ba',
   },
+  {
+    username: '',
+    email: 'c@gmail.com',
+    password: 'c',
+  },
+  {
+    username: 'd',
+    email: '',
+    password: 'd',
+  },
+  {
+    username: 'e',
+    email: 'e@gmail.com',
+    password: '',
+  },
+  {
+    username: '',
+    email: '',
+    password: '',
+  },
 ];
