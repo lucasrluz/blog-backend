@@ -4,9 +4,14 @@ import { findUserByEmailRepository } from '../repositories/findUserByEmailReposi
 import { findUserByUsernameRepository } from '../repositories/findUserByUsernameRepository';
 import { hash } from 'bcrypt';
 import { saveUserRepository } from '../repositories/saveUserRepository';
+import { validateUser } from '../classValidator/validateUser';
 
 export async function saveUserService(user: IUser) {
   const { username, email, password } = user;
+
+  const userValidation = await validateUser(user);
+
+  if (userValidation) return createResponse(400, { message: userValidation });
 
   const existingUserByUsername = await findUserByUsernameRepository(username);
 
