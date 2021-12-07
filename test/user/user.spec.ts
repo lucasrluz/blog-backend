@@ -54,6 +54,41 @@ export function executeUserTests() {
 
         await prisma.user.deleteMany();
       });
+
+      it('Should not save user', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[4]);
+
+        expect(saveUserResponse.status).toEqual(400);
+        expect(saveUserResponse.body.message).toEqual(
+          'username should not be empty',
+        );
+
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not save user', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[5]);
+
+        expect(saveUserResponse.status).toEqual(400);
+        expect(saveUserResponse.body.message).toEqual('email must be an email');
+
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not save user', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[6]);
+
+        expect(saveUserResponse.status).toEqual(400);
+        expect(saveUserResponse.body.message).toEqual(
+          'password should not be empty',
+        );
+      });
     });
 
     describe('/user/:username (GET)', () => {
@@ -154,6 +189,76 @@ export function executeUserTests() {
         expect(editUserResponse.status).toEqual(400);
         expect(editUserResponse.body.message).toEqual(
           'This username is already in use',
+        );
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited user', async () => {
+        const userData = {
+          username: users[7].username,
+          password: users[7].password,
+        };
+
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const username = users[0].username;
+        const password = users[0].password;
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const editUserResponse = await request(app)
+          .put(`/user/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(userData);
+
+        expect(editUserResponse.status).toEqual(400);
+        expect(editUserResponse.body.message).toEqual(
+          'username should not be empty',
+        );
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited user', async () => {
+        const userData = {
+          username: users[1].username,
+          password: users[7].password,
+        };
+
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const username = users[0].username;
+        const password = users[0].password;
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const editUserResponse = await request(app)
+          .put(`/user/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(userData);
+
+        expect(editUserResponse.status).toEqual(400);
+        expect(editUserResponse.body.message).toEqual(
+          'password should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();

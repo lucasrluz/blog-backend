@@ -69,6 +69,42 @@ export function executeUserAuthTests() {
         await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
+
+      it('Should not return jwt token', async () => {
+        await request(app).post('/user').send(users[0]);
+
+        const { username, password } = users[4];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        expect(authenticateUserResponse.status).toEqual(400);
+        expect(authenticateUserResponse.body.message).toEqual(
+          'username should not be empty',
+        );
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return jwt token', async () => {
+        await request(app).post('/user').send(users[0]);
+
+        const { username, password } = users[6];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        expect(authenticateUserResponse.status).toEqual(400);
+        expect(authenticateUserResponse.body.message).toEqual(
+          'password should not be empty',
+        );
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
     });
 
     describe('/user/:user_id (PUT) (middleware)', () => {
