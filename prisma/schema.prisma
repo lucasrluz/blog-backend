@@ -15,6 +15,7 @@ model User {
   username String @unique
   email String @unique
   password String
+  post Post[]
   refreshToken RefreshToken?
 
   @@map("user")
@@ -27,4 +28,14 @@ model RefreshToken {
   user User @relation(fields: [userId], references: [id])
 
   @@map("refresh_token")
+}
+
+model Post {
+  id String @id @default(uuid())
+  title String
+  content String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("post")
 }
