@@ -142,5 +142,129 @@ export function executePostTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/post/:username/:post_title/:post_id (GET)', () => {
+      it('Should return post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const findPostResponse = await request(app).get(
+          `/post/${username}/${postData.title}/${postId}`,
+        );
+
+        expect(findPostResponse.status).toEqual(200);
+        expect(findPostResponse.body.object).toEqual({
+          id: postId,
+          title: postData.title,
+          content: postData.content,
+          userId,
+        });
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const findPostResponse = await request(app).get(
+          `/post/${users[1].username}/${postData.title}/${postId}`,
+        );
+
+        expect(findPostResponse.status).toEqual(404);
+        expect(findPostResponse.body.message).toEqual('User not found');
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const findPostResponse = await request(app).get(
+          `/post/${username}/${posts[1].title}/${postId}`,
+        );
+
+        expect(findPostResponse.status).toEqual(404);
+        expect(findPostResponse.body.message).toEqual('Post not found');
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
