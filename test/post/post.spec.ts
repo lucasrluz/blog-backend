@@ -266,5 +266,74 @@ export function executePostTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/post/:username (GET)', () => {
+      it('Should return posts by username', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData1 = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const postData2 = {
+          title: posts[1].title,
+          content: posts[1].content,
+        };
+
+        await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData1);
+
+        await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData2);
+
+        const findPostResponse = await request(app).get(`/post/${username}`);
+
+        expect(findPostResponse.status).toEqual(200);
+        expect(findPostResponse.body.object.length).toEqual(2);
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return posts', async () => {
+        const findPostResponse = await request(app).get(
+          `/post/${users[0].username}`,
+        );
+
+        expect(findPostResponse.status).toEqual(404);
+        expect(findPostResponse.body.message).toEqual('User not found');
+      });
+
+      it('Should not return posts', async () => {
+        await request(app).post('/user').send(users[0]);
+
+        const findPostResponse = await request(app).get(
+          `/post/${users[0].username}`,
+        );
+
+        expect(findPostResponse.status).toEqual(404);
+        expect(findPostResponse.body.message).toEqual('Posts not found');
+
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
