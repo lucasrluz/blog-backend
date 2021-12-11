@@ -336,7 +336,7 @@ export function executePostTests() {
       });
     });
 
-    describe.only('/post/:user_id/:post_id (PUT)', () => {
+    describe('/post/:user_id/:post_id (PUT)', () => {
       it('Should return post edited', async () => {
         const saveUserResponse = await request(app)
           .post('/user')
