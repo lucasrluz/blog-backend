@@ -335,5 +335,183 @@ export function executePostTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe.only('/post/:user_id/:post_id (PUT)', () => {
+      it('Should return post edited', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData1 = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData1);
+
+        const postId = savePostResponse.body.object.id;
+
+        const postData2 = {
+          title: posts[1].title,
+          content: posts[1].content,
+        };
+
+        const editPostResponse = await request(app)
+          .put(`/post/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData2);
+
+        expect(editPostResponse.status).toEqual(200);
+        expect(editPostResponse.body.object).toEqual({
+          id: postId,
+          title: postData2.title,
+          content: postData2.content,
+          userId,
+        });
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData1 = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData1);
+
+        const postId = savePostResponse.body.object.id;
+
+        const postData2 = {
+          title: posts[2].title,
+          content: posts[2].content,
+        };
+
+        const editPostResponse = await request(app)
+          .put(`/post/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData2);
+
+        expect(editPostResponse.status).toEqual(400);
+        expect(editPostResponse.body.message).toEqual(
+          'title should not be empty',
+        );
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData1 = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData1);
+
+        const postId = savePostResponse.body.object.id;
+
+        const postData2 = {
+          title: posts[3].title,
+          content: posts[3].content,
+        };
+
+        const editPostResponse = await request(app)
+          .put(`/post/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData2);
+
+        expect(editPostResponse.status).toEqual(400);
+        expect(editPostResponse.body.message).toEqual(
+          'content should not be empty',
+        );
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData2 = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const editPostResponse = await request(app)
+          .put(`/post/${userId}/${'postIdInvalid'}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData2);
+
+        expect(editPostResponse.status).toEqual(404);
+        expect(editPostResponse.body.message).toEqual('Post not found');
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
