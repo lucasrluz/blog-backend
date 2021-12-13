@@ -155,8 +155,6 @@ export function executeUserAuthTests() {
           .post('/login')
           .send({ username, password });
 
-        const oldToken = authenticateUserResponse.body.object.token;
-
         const oldRefreshToken =
           authenticateUserResponse.body.object.refreshToken.id;
 
@@ -167,10 +165,7 @@ export function executeUserAuthTests() {
         const newRefreshToken =
           refreshTokenResponse.body.object.refreshToken.id;
 
-        const newToken = refreshTokenResponse.body.object.token;
-
         expect(refreshTokenResponse.status).toEqual(200);
-        expect(newToken).toEqual(oldToken);
         expect(oldRefreshToken).toEqual(newRefreshToken);
 
         await prisma.refreshToken.deleteMany();
