@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ensureAuthenticatedUser } from '../userAuth/middleware/ensureAuthenticatedUser';
+import { deletePostController } from './controllers/deletePostController';
 import { editPostController } from './controllers/editPostController';
 import { findPostByUsernameController } from './controllers/findPostByUsernameController';
 import { findPostController } from './controllers/findPostController';
@@ -14,4 +15,9 @@ postRoute.put(
   '/post/:user_id/:post_id',
   ensureAuthenticatedUser,
   editPostController,
+);
+postRoute.delete(
+  '/post/:user_id/:post_id',
+  ensureAuthenticatedUser,
+  deletePostController,
 );
