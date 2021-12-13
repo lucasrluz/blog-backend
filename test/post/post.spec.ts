@@ -513,5 +513,73 @@ export function executePostTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/post/:user_id/:post_id (DELETE)', () => {
+      it('Should deleted post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const deletePostResponse = await request(app)
+          .delete(`/post/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(deletePostResponse.status).toEqual(200);
+        expect(deletePostResponse.body.message).toEqual(
+          'Post deleted successfully',
+        );
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should deleted post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const deletePostResponse = await request(app)
+          .delete(`/post/${userId}/${'postIdInvalid'}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(deletePostResponse.status).toEqual(404);
+        expect(deletePostResponse.body.message).toEqual('Post not found');
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
