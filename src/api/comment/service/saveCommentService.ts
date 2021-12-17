@@ -1,6 +1,5 @@
 import { createResponse } from '../../../response/createResponse';
 import { findPostByPostIdRepository } from '../../post/repositories/findPostByPostIdRepository';
-import { findUserByUserIdRepository } from '../../user/repositories/findUserByUserIdRepository';
 import { validateComment } from '../classValidator/validateComment';
 import { IComment } from '../interface/IComment';
 import { saveCommentRepository } from '../repositories/saveCommentRepository';
