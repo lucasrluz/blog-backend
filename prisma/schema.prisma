@@ -17,6 +17,7 @@ model User {
   password String
   post Post[]
   refreshToken RefreshToken?
+  comment Comment[]
 
   @@map("user")
 }
@@ -36,6 +37,18 @@ model Post {
   content String
   userId String
   user User @relation(fields: [userId], references: [id])
+  comment Comment[]
 
   @@map("post")
+}
+
+model Comment {
+  id String @id @default(uuid())
+  content String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  postId String
+  post Post @relation(fields: [postId], references: [id])
+
+  @@map("comment")
 }
