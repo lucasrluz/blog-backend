@@ -174,5 +174,166 @@ export function executeCommentTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/comment/:user_id/:post_id (GET)', () => {
+      it('Should return comments by post', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData1 = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const commentData2 = {
+          content: comments[0].content,
+          postId,
+        };
+
+        await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData1);
+
+        await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData2);
+
+        const findCommentResponse = await request(app)
+          .get(`/comment/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(findCommentResponse.status).toEqual(200);
+        expect(findCommentResponse.body.object.length).toEqual(2);
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return comments', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData1 = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const commentData2 = {
+          content: comments[0].content,
+          postId,
+        };
+
+        await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData1);
+
+        await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData2);
+
+        const findCommentResponse = await request(app)
+          .get(`/comment/${userId}/${'postIdInvalid'}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(findCommentResponse.status).toEqual(404);
+        expect(findCommentResponse.body.message).toEqual('Post not found');
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not return comments', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const findCommentResponse = await request(app)
+          .get(`/comment/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(findCommentResponse.status).toEqual(404);
+        expect(findCommentResponse.body.message).toEqual('Comments not found');
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
