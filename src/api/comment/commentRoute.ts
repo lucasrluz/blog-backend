@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ensureAuthenticatedUser } from '../userAuth/middleware/ensureAuthenticatedUser';
+import { editCommentController } from './controllers/editCommentController';
 import { findCommentByPostController } from './controllers/findCommentByPostController';
 import { saveCommentController } from './controllers/saveCommentController';
 
@@ -14,4 +15,9 @@ commentRoute.get(
   '/comment/:user_id/:post_id',
   ensureAuthenticatedUser,
   findCommentByPostController,
+);
+commentRoute.put(
+  '/comment/:comment_id/:user_id/:post_id',
+  ensureAuthenticatedUser,
+  editCommentController,
 );
