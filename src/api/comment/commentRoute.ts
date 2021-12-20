@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ensureAuthenticatedUser } from '../userAuth/middleware/ensureAuthenticatedUser';
+import { deleteCommentController } from './controllers/deleteCommentController';
 import { editCommentController } from './controllers/editCommentController';
 import { findCommentByPostController } from './controllers/findCommentByPostController';
 import { saveCommentController } from './controllers/saveCommentController';
@@ -20,4 +21,9 @@ commentRoute.put(
   '/comment/:comment_id/:user_id/:post_id',
   ensureAuthenticatedUser,
   editCommentController,
+);
+commentRoute.delete(
+  '/comment/:comment_id/:user_id',
+  ensureAuthenticatedUser,
+  deleteCommentController,
 );
