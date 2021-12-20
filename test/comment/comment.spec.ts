@@ -562,5 +562,86 @@ export function executeCommentTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/comment/:comment_id/:user_id (DELETE)', () => {
+      it('Should deleted comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const saveCommentResponse = await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData);
+
+        const commentId = saveCommentResponse.body.object.id;
+
+        const deleteCommentResponse = await request(app)
+          .delete(`/comment/${commentId}/${userId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(deleteCommentResponse.status).toEqual(200);
+        expect(deleteCommentResponse.body.message).toEqual(
+          'Successfully deleted comment',
+        );
+
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not deleted comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const deleteCommentResponse = await request(app)
+          .delete(`/comment/${'commentIdInvalid'}/${userId}`)
+          .auth(token, { type: 'bearer' });
+
+        expect(deleteCommentResponse.status).toEqual(404);
+        expect(deleteCommentResponse.body.message).toEqual('Comment not found');
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
