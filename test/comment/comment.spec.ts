@@ -335,5 +335,232 @@ export function executeCommentTests() {
         await prisma.user.deleteMany();
       });
     });
+
+    describe('/comment/:comment_id/:user_id/:post_id (PUT)', () => {
+      it('Should return edited comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const saveCommentResponse = await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData);
+
+        const commentId = saveCommentResponse.body.object.id;
+
+        const content = comments[1].content;
+
+        const editCommentResponse = await request(app)
+          .put(`/comment/${commentId}/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send({ content });
+
+        expect(editCommentResponse.status).toEqual(200);
+        expect(editCommentResponse.body.object).toEqual({
+          id: saveCommentResponse.body.object.id,
+          content: comments[1].content,
+          userId,
+          postId,
+        });
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData = {
+          content: comments[0].content,
+          postId,
+        };
+
+        await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData);
+
+        const content = comments[1].content;
+
+        const editCommentResponse = await request(app)
+          .put(`/comment/${'commentIdInvalid'}/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send({ content });
+
+        expect(editCommentResponse.status).toEqual(404);
+        expect(editCommentResponse.body.message).toEqual('Comment not found');
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const saveCommentResponse = await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData);
+
+        const commentId = saveCommentResponse.body.object.id;
+
+        const content = comments[1].content;
+
+        const editCommentResponse = await request(app)
+          .put(`/comment/${commentId}/${userId}/${'postIdInvalid'}`)
+          .auth(token, { type: 'bearer' })
+          .send({ content });
+
+        expect(editCommentResponse.status).toEqual(404);
+        expect(editCommentResponse.body.message).toEqual('Comment not found');
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+
+      it('Should not edited comment', async () => {
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const { username, password } = users[0];
+
+        const authenticateUserResponse = await request(app)
+          .post('/login')
+          .send({ username, password });
+
+        const token = authenticateUserResponse.body.object.token;
+
+        const postData = {
+          title: posts[0].title,
+          content: posts[0].content,
+        };
+
+        const savePostResponse = await request(app)
+          .post(`/post/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(postData);
+
+        const postId = savePostResponse.body.object.id;
+
+        const commentData = {
+          content: comments[0].content,
+          postId,
+        };
+
+        const saveCommentResponse = await request(app)
+          .post(`/comment/${userId}`)
+          .auth(token, { type: 'bearer' })
+          .send(commentData);
+
+        const commentId = saveCommentResponse.body.object.id;
+
+        const content = comments[2].content;
+
+        const editCommentResponse = await request(app)
+          .put(`/comment/${commentId}/${userId}/${postId}`)
+          .auth(token, { type: 'bearer' })
+          .send({ content });
+
+        expect(editCommentResponse.status).toEqual(400);
+        expect(editCommentResponse.body.message).toEqual(
+          'content should not be empty',
+        );
+
+        await prisma.comment.deleteMany();
+        await prisma.post.deleteMany();
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
+    });
   });
 }
