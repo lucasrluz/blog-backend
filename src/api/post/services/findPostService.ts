@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { findUserByUsernameRepository } from '../../user/repositories/findUserByUsernameRepository';
 import { findPostByTitleUsernamePostIdRepository } from '../repositories/findPostByTitleUsernamePostIdRepository';
 
@@ -9,7 +9,7 @@ export async function findPostService(
 ) {
   const existingUser = await findUserByUsernameRepository(username);
 
-  if (!existingUser) return createResponse(404, { message: 'User not found' });
+  if (!existingUser) return apiResponse(404, { message: 'User not found' });
 
   const existingPost = await findPostByTitleUsernamePostIdRepository(
     postId,
@@ -17,7 +17,7 @@ export async function findPostService(
     existingUser.id,
   );
 
-  if (!existingPost) return createResponse(404, { message: 'Post not found' });
+  if (!existingPost) return apiResponse(404, { message: 'Post not found' });
 
-  return createResponse(200, { object: existingPost });
+  return apiResponse(200, { object: existingPost });
 }

@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { findPostByPostIdRepository } from '../../post/repositories/findPostByPostIdRepository';
 import { validateComment } from '../classValidator/validateComment';
 import { IComment } from '../interface/IComment';
@@ -8,15 +8,15 @@ export async function saveCommentService(comment: IComment) {
   const commentValidation = await validateComment(comment);
 
   if (commentValidation)
-    return createResponse(400, { message: commentValidation });
+    return apiResponse(400, { message: commentValidation });
 
   const { postId } = comment;
 
   const existingPost = await findPostByPostIdRepository(postId);
 
-  if (!existingPost) return createResponse(404, { message: 'Post not found' });
+  if (!existingPost) return apiResponse(404, { message: 'Post not found' });
 
   const saveCommentResponse = await saveCommentRepository(comment);
 
-  return createResponse(201, { object: saveCommentResponse });
+  return apiResponse(201, { object: saveCommentResponse });
 }

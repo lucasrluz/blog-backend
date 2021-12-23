@@ -1,4 +1,4 @@
-export function createResponse(
+export function apiResponse(
   status: number,
   data?: { message?: string; object?: any },
 ) {

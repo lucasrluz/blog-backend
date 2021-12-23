@@ -1,10 +1,10 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { findUserByUsernameRepository } from '../repositories/findUserByUsernameRepository';
 
 export async function findUserService(username: string) {
   const existingUser = await findUserByUsernameRepository(username);
 
-  if (!existingUser) return createResponse(404, { message: 'User not found' });
+  if (!existingUser) return apiResponse(404, { message: 'User not found' });
 
-  return createResponse(200, { object: { username: existingUser.username } });
+  return apiResponse(200, { object: { username: existingUser.username } });
 }

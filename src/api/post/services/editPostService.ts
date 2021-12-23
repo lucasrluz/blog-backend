@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { validatePost } from '../classValidator/validatePost';
 import { editPostRepository } from '../repositories/editPostRepository';
 import { findPostByPostIdAndUserIdRepository } from '../repositories/findPostByPostIdAndUserIdRepository';
@@ -21,16 +21,16 @@ export async function editPostService(
 
   const postValidation = await validatePost(post);
 
-  if (postValidation) return createResponse(400, { message: postValidation });
+  if (postValidation) return apiResponse(400, { message: postValidation });
 
   const existingPost = await findPostByPostIdAndUserIdRepository(
     postId,
     userId,
   );
 
-  if (!existingPost) return createResponse(404, { message: 'Post not found' });
+  if (!existingPost) return apiResponse(404, { message: 'Post not found' });
 
   const editResponse = await editPostRepository(postId, title, content);
 
-  return createResponse(200, { object: editResponse });
+  return apiResponse(200, { object: editResponse });
 }

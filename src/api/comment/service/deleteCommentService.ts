@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { deleteCommentRepository } from '../repositories/deleteCommentRepository';
 import { findCommentByCommentIdUserIdRepository } from '../repositories/findCommentByCommentIdUserIdRepository';
 
@@ -9,9 +9,9 @@ export async function deleteCommentService(commentId: string, userId: string) {
   );
 
   if (!existingComment)
-    return createResponse(404, { message: 'Comment not found' });
+    return apiResponse(404, { message: 'Comment not found' });
 
   await deleteCommentRepository(commentId);
 
-  return createResponse(200, { message: 'Successfully deleted comment' });
+  return apiResponse(200, { message: 'Successfully deleted comment' });
 }

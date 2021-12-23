@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { editCommentRepository } from '../repositories/editCommentRepository';
 import { findCommentByUserIdPostIdCommentIdRepository } from '../repositories/findCommentByUserIdPostIdCommentIdRepository';
 
@@ -15,12 +15,12 @@ export async function editCommentService(
   );
 
   if (!existingComment)
-    return createResponse(404, { message: 'Comment not found' });
+    return apiResponse(404, { message: 'Comment not found' });
 
   if (!content)
-    return createResponse(400, { message: 'content should not be empty' });
+    return apiResponse(400, { message: 'content should not be empty' });
 
   const editCommentResponse = await editCommentRepository(commentId, content);
 
-  return createResponse(200, { object: editCommentResponse });
+  return apiResponse(200, { object: editCommentResponse });
 }

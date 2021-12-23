@@ -1,5 +1,5 @@
 import { hash } from 'bcrypt';
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { editUserRepository } from '../repositories/editUserRepository';
 import { findUserByUsernameAndIdRepository } from '../repositories/findUserByUsernameAndIdRepository';
 
@@ -10,10 +10,10 @@ export async function editUserService(
   const { username, password } = data;
 
   if (!username)
-    return createResponse(400, { message: 'username should not be empty' });
+    return apiResponse(400, { message: 'username should not be empty' });
 
   if (!password)
-    return createResponse(400, { message: 'password should not be empty' });
+    return apiResponse(400, { message: 'password should not be empty' });
 
   const existingUser = await findUserByUsernameAndIdRepository(
     username,
@@ -21,7 +21,7 @@ export async function editUserService(
   );
 
   if (existingUser)
-    return createResponse(400, { message: 'This username is already in use' });
+    return apiResponse(400, { message: 'This username is already in use' });
 
   const passwordHash = await hash(password, 8);
 
@@ -30,7 +30,7 @@ export async function editUserService(
     password: passwordHash,
   });
 
-  return createResponse(200, {
+  return apiResponse(200, {
     message: 'Successfully edited user',
     object: {
       id: editUserResponse.id,

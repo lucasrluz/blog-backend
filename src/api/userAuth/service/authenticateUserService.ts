@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt';
 import { generateToken } from '../../../providers/generateToken';
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { findUserByUsernameRepository } from '../../user/repositories/findUserByUsernameRepository';
 import { deleteRefreshTokenRepository } from '../repositories/deleteRefreshTokenRepository';
 import { generateRefreshTokenRepository } from '../repositories/generateRefreshTokenRepository';
@@ -10,20 +10,20 @@ export async function authenticateUserService(
   password: string,
 ) {
   if (!username)
-    return createResponse(400, { message: 'username should not be empty' });
+    return apiResponse(400, { message: 'username should not be empty' });
 
   if (!password)
-    return createResponse(400, { message: 'password should not be empty' });
+    return apiResponse(400, { message: 'password should not be empty' });
 
   const existingUser = await findUserByUsernameRepository(username);
 
   if (!existingUser)
-    return createResponse(400, { message: 'Username or password incorrect' });
+    return apiResponse(400, { message: 'Username or password incorrect' });
 
   const passwordMatch = await compare(password, existingUser.password);
 
   if (!passwordMatch)
-    return createResponse(400, { message: 'Username or password incorrect' });
+    return apiResponse(400, { message: 'Username or password incorrect' });
 
   const token = generateToken(existingUser.id);
 
@@ -31,5 +31,5 @@ export async function authenticateUserService(
 
   const refreshToken = await generateRefreshTokenRepository(existingUser.id);
 
-  return createResponse(200, { object: { token, refreshToken } });
+  return apiResponse(200, { object: { token, refreshToken } });
 }

@@ -1,4 +1,4 @@
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { IUser } from '../interface/IUser';
 import { findUserByEmailRepository } from '../repositories/findUserByEmailRepository';
 import { findUserByUsernameRepository } from '../repositories/findUserByUsernameRepository';
@@ -11,19 +11,19 @@ export async function saveUserService(user: IUser) {
 
   const userValidation = await validateUser(user);
 
-  if (userValidation) return createResponse(400, { message: userValidation });
+  if (userValidation) return apiResponse(400, { message: userValidation });
 
   const existingUserByUsername = await findUserByUsernameRepository(username);
 
   if (existingUserByUsername)
-    return createResponse(400, {
+    return apiResponse(400, {
       message: 'This username is already in use',
     });
 
   const existingUserByEmail = await findUserByEmailRepository(email);
 
   if (existingUserByEmail)
-    return createResponse(400, {
+    return apiResponse(400, {
       message: 'This e-mail is already in use',
     });
 
@@ -35,7 +35,7 @@ export async function saveUserService(user: IUser) {
     password: passwordHash,
   });
 
-  return createResponse(201, {
+  return apiResponse(201, {
     message: 'Successfully registered user',
     object: {
       id: saveUserResponse.id,

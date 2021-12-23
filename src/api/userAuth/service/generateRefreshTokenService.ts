@@ -1,5 +1,5 @@
 import { generateToken } from '../../../providers/generateToken';
-import { createResponse } from '../../../response/createResponse';
+import { apiResponse } from '../../../apiResponse/apiResponse';
 import { findRefreshTokenByIdRepository } from '../repositories/findRefreshTokenByIdRepository';
 import dayjs from 'dayjs';
 import { deleteRefreshTokenRepository } from '../repositories/deleteRefreshTokenRepository';
@@ -11,7 +11,7 @@ export async function generateRefreshTokenService(refreshTokenId: string) {
   );
 
   if (!existingRefreshToken)
-    return createResponse(400, { message: 'Refresh token invalid' });
+    return apiResponse(400, { message: 'Refresh token invalid' });
 
   const token = generateToken(existingRefreshToken.userId);
 
@@ -26,10 +26,10 @@ export async function generateRefreshTokenService(refreshTokenId: string) {
       existingRefreshToken.userId,
     );
 
-    return createResponse(200, { object: { token, refreshToken } });
+    return apiResponse(200, { object: { token, refreshToken } });
   }
 
-  return createResponse(200, {
+  return apiResponse(200, {
     object: { token, refreshToken: existingRefreshToken },
   });
 }
