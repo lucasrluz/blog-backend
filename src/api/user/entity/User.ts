@@ -1,13 +1,13 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class User {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Username should not be empty' })
   username: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'Email must be an email' })
   email: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Password should not be empty' })
   password: string;
 
   constructor(username: string, email: string, password: string) {

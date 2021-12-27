@@ -62,7 +62,7 @@ export function executeUserTests() {
 
         expect(saveUserResponse.status).toEqual(400);
         expect(saveUserResponse.body.message).toEqual(
-          'username should not be empty',
+          'Username should not be empty',
         );
 
         await prisma.user.deleteMany();
@@ -74,7 +74,7 @@ export function executeUserTests() {
           .send(users[5]);
 
         expect(saveUserResponse.status).toEqual(400);
-        expect(saveUserResponse.body.message).toEqual('email must be an email');
+        expect(saveUserResponse.body.message).toEqual('Email must be an email');
 
         await prisma.user.deleteMany();
       });
@@ -86,7 +86,7 @@ export function executeUserTests() {
 
         expect(saveUserResponse.status).toEqual(400);
         expect(saveUserResponse.body.message).toEqual(
-          'password should not be empty',
+          'Password should not be empty',
         );
       });
     });
@@ -223,7 +223,7 @@ export function executeUserTests() {
 
         expect(editUserResponse.status).toEqual(400);
         expect(editUserResponse.body.message).toEqual(
-          'username should not be empty',
+          'Username should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -258,7 +258,7 @@ export function executeUserTests() {
 
         expect(editUserResponse.status).toEqual(400);
         expect(editUserResponse.body.message).toEqual(
-          'password should not be empty',
+          'Password should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();

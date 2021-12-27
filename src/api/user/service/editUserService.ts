@@ -10,10 +10,10 @@ export async function editUserService(
   const { username, password } = data;
 
   if (!username)
-    return apiResponse(400, { message: 'username should not be empty' });
+    return apiResponse(400, { message: 'Username should not be empty' });
 
   if (!password)
-    return apiResponse(400, { message: 'password should not be empty' });
+    return apiResponse(400, { message: 'Password should not be empty' });
 
   const existingUser = await findUserByUsernameAndIdRepository(
     username,
