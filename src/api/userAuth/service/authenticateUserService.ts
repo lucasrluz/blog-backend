@@ -10,10 +10,10 @@ export async function authenticateUserService(
   password: string,
 ) {
   if (!username)
-    return apiResponse(400, { message: 'username should not be empty' });
+    return apiResponse(400, { message: 'Username should not be empty' });
 
   if (!password)
-    return apiResponse(400, { message: 'password should not be empty' });
+    return apiResponse(400, { message: 'Password should not be empty' });
 
   const existingUser = await findUserByUsernameRepository(username);
 

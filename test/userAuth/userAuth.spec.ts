@@ -81,7 +81,7 @@ export function executeUserAuthTests() {
 
         expect(authenticateUserResponse.status).toEqual(400);
         expect(authenticateUserResponse.body.message).toEqual(
-          'username should not be empty',
+          'Username should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -99,7 +99,7 @@ export function executeUserAuthTests() {
 
         expect(authenticateUserResponse.status).toEqual(400);
         expect(authenticateUserResponse.body.message).toEqual(
-          'password should not be empty',
+          'Password should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
