@@ -1,13 +1,13 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class Comment {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Content should not be empty' })
   content: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'UserId should not be empty' })
   userId: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'PostId should not be empty' })
   postId: string;
 
   constructor(content: string, userId: string, postId: string) {

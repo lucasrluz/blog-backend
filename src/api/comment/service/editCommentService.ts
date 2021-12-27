@@ -18,7 +18,7 @@ export async function editCommentService(
     return apiResponse(404, { message: 'Comment not found' });
 
   if (!content)
-    return apiResponse(400, { message: 'content should not be empty' });
+    return apiResponse(400, { message: 'Content should not be empty' });
 
   const editCommentResponse = await editCommentRepository(commentId, content);
 

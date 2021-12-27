@@ -98,7 +98,7 @@ export function executeCommentTests() {
 
         expect(saveCommentResponse.status).toEqual(400);
         expect(saveCommentResponse.body.message).toEqual(
-          'content should not be empty',
+          'Content should not be empty',
         );
 
         await prisma.post.deleteMany();
@@ -133,7 +133,7 @@ export function executeCommentTests() {
 
         expect(saveCommentResponse.status).toEqual(400);
         expect(saveCommentResponse.body.message).toEqual(
-          'postId should not be empty',
+          'PostId should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -553,7 +553,7 @@ export function executeCommentTests() {
 
         expect(editCommentResponse.status).toEqual(400);
         expect(editCommentResponse.body.message).toEqual(
-          'content should not be empty',
+          'Content should not be empty',
         );
 
         await prisma.comment.deleteMany();
