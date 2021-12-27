@@ -1,13 +1,13 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class Post {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Title should not be empty' })
   title: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Content should not be empty' })
   content: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'UserId should not be empty' })
   userId: string;
 
   constructor(title: string, content: string, userId: string) {

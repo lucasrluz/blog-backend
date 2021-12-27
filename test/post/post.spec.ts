@@ -67,7 +67,7 @@ export function executePostTests() {
 
         expect(savePostResponse.status).toEqual(400);
         expect(savePostResponse.body.message).toEqual(
-          'title should not be empty',
+          'Title should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -101,7 +101,7 @@ export function executePostTests() {
 
         expect(savePostResponse.status).toEqual(400);
         expect(savePostResponse.body.message).toEqual(
-          'content should not be empty',
+          'Content should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -135,7 +135,7 @@ export function executePostTests() {
 
         expect(savePostResponse.status).toEqual(400);
         expect(savePostResponse.body.message).toEqual(
-          'title should not be empty',
+          'Title should not be empty',
         );
 
         await prisma.refreshToken.deleteMany();
@@ -426,7 +426,7 @@ export function executePostTests() {
 
         expect(editPostResponse.status).toEqual(400);
         expect(editPostResponse.body.message).toEqual(
-          'title should not be empty',
+          'Title should not be empty',
         );
 
         await prisma.post.deleteMany();
@@ -473,7 +473,7 @@ export function executePostTests() {
 
         expect(editPostResponse.status).toEqual(400);
         expect(editPostResponse.body.message).toEqual(
-          'content should not be empty',
+          'Content should not be empty',
         );
 
         await prisma.post.deleteMany();
