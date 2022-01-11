@@ -142,6 +142,28 @@ export function executeUserAuthTests() {
         await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
       });
+
+      it('Should return message of token is missing', async () => {
+        const userData = {
+          username: users[0].username,
+          password: users[0].password,
+        };
+
+        const saveUserResponse = await request(app)
+          .post('/user')
+          .send(users[0]);
+
+        const userId = saveUserResponse.body.object.id;
+
+        const editUserResponse = await request(app)
+          .put(`/user/${userId}`)
+          .send(userData);
+        expect(editUserResponse.status).toEqual(401);
+        expect(editUserResponse.body.message).toEqual('Token is missing');
+
+        await prisma.refreshToken.deleteMany();
+        await prisma.user.deleteMany();
+      });
     });
 
     describe('/refresh-token (POST)', () => {
