@@ -3,15 +3,12 @@ import { app } from '../../src/app';
 import { prisma } from '../../src/prisma/prisma';
 import { users } from '../user/data/users';
 import { sleep } from './methods/sleep';
-import { validateToken } from './methods/validateToken';
 
 export function executeUserAuthTests() {
   describe('User auth route', () => {
     describe('/login (POST)', () => {
       it('Should return jwt token', async () => {
-        const saveUserResponse = await request(app)
-          .post('/user')
-          .send(users[0]);
+        await request(app).post('/user').send(users[0]);
 
         const { username, password } = users[0];
 
@@ -20,13 +17,6 @@ export function executeUserAuthTests() {
           .send({ username, password });
 
         expect(authenticateUserResponse.status).toEqual(200);
-
-        const tokenValidation = validateToken(
-          authenticateUserResponse.body.object.token,
-          saveUserResponse.body.object.id,
-        );
-
-        expect(tokenValidation).toEqual('Token valid');
 
         await prisma.refreshToken.deleteMany();
         await prisma.user.deleteMany();
