@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { apiResponse } from '../../../apiResponse/apiResponse';
 
 export async function ensureAuthenticatedUser(
   req: Request,
@@ -11,7 +10,7 @@ export async function ensureAuthenticatedUser(
 
   const header = req.headers.authorization;
 
-  if (!header) return apiResponse(401, { message: 'Token is missing' });
+  if (!header) return res.status(401).json({ message: 'Token is missing' });
 
   const [, token] = header.split(' ');
 
