@@ -15,7 +15,7 @@ export async function ensureAuthenticatedUser(
   const [, token] = header.split(' ');
 
   try {
-    verify(token, 'eb66b0ef-f356-4f83-bb3c-78124abc7288', {
+    verify(token, process.env.SECRET_OR_PRIVATE_KEY as string, {
       subject: userId,
     });
     next();
