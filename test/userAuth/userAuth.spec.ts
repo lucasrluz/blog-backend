@@ -4,230 +4,231 @@ import { prisma } from '../../src/prisma/prisma';
 import { users } from '../user/data/users';
 import { sleep } from './methods/sleep';
 
-export function executeUserAuthTests() {
-  describe('User auth route', () => {
-    describe('/login (POST)', () => {
-      it('Should return jwt token', async () => {
-        await request(app).post('/user').send(users[0]);
+jest.setTimeout(60000);
 
-        const { username, password } = users[0];
+describe('User auth route', () => {
+  beforeAll(async () => {
+    await prisma.comment.deleteMany();
+    await prisma.post.deleteMany();
+    await prisma.refreshToken.deleteMany();
+    await prisma.user.deleteMany();
+  });
 
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
+  describe('/login (POST)', () => {
+    it('Should return jwt token', async () => {
+      await request(app).post('/user').send(users[0]);
 
-        expect(authenticateUserResponse.status).toEqual(200);
+      const { username, password } = users[0];
 
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
 
-      it('Should not return jwt token', async () => {
-        await request(app).post('/user').send(users[0]);
+      expect(authenticateUserResponse.status).toEqual(200);
 
-        const username = users[1].username;
-        const password = users[0].password;
-
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
-
-        expect(authenticateUserResponse.status).toEqual(400);
-        expect(authenticateUserResponse.body.message).toEqual(
-          'Username or password incorrect',
-        );
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
-
-      it('Should not return jwt token', async () => {
-        await request(app).post('/user').send(users[0]);
-
-        const username = users[0].username;
-        const password = users[1].password;
-
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
-
-        expect(authenticateUserResponse.status).toEqual(400);
-        expect(authenticateUserResponse.body.message).toEqual(
-          'Username or password incorrect',
-        );
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
-
-      it('Should not return jwt token', async () => {
-        await request(app).post('/user').send(users[0]);
-
-        const { username, password } = users[4];
-
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
-
-        expect(authenticateUserResponse.status).toEqual(400);
-        expect(authenticateUserResponse.body.message).toEqual(
-          'Username should not be empty',
-        );
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
-
-      it('Should not return jwt token', async () => {
-        await request(app).post('/user').send(users[0]);
-
-        const { username, password } = users[6];
-
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
-
-        expect(authenticateUserResponse.status).toEqual(400);
-        expect(authenticateUserResponse.body.message).toEqual(
-          'Password should not be empty',
-        );
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
     });
 
-    describe('/user/:user_id (PUT) (middleware)', () => {
-      it('Should return message of token invalid', async () => {
-        const userData = {
-          username: users[0].username,
-          password: users[0].password,
-        };
+    it('Should not return jwt token', async () => {
+      await request(app).post('/user').send(users[0]);
 
-        await request(app).post('/user').send(users[0]);
+      const username = users[1].username;
+      const password = users[0].password;
 
-        const saveUserResponse2 = await request(app)
-          .post('/user')
-          .send(users[1]);
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
 
-        const userId = saveUserResponse2.body.object.id;
+      expect(authenticateUserResponse.status).toEqual(400);
+      expect(authenticateUserResponse.body.message).toEqual(
+        'Username or password incorrect',
+      );
 
-        const username = users[0].username;
-        const password = users[0].password;
-
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
-
-        const token = authenticateUserResponse.body.object.token;
-
-        const editUserResponse = await request(app)
-          .put(`/user/${userId}`)
-          .auth(token, { type: 'bearer' })
-          .send(userData);
-
-        expect(editUserResponse.status).toEqual(400);
-        expect(editUserResponse.body.message).toEqual('Token invalid');
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
-
-      it('Should return message of token is missing', async () => {
-        const userData = {
-          username: users[0].username,
-          password: users[0].password,
-        };
-
-        const saveUserResponse = await request(app)
-          .post('/user')
-          .send(users[0]);
-
-        const userId = saveUserResponse.body.object.id;
-
-        const editUserResponse = await request(app)
-          .put(`/user/${userId}`)
-          .send(userData);
-        expect(editUserResponse.status).toEqual(401);
-        expect(editUserResponse.body.message).toEqual('Token is missing');
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
     });
 
-    describe('/refresh-token (POST)', () => {
-      it('Should return refresh token', async () => {
-        await request(app).post('/user').send(users[0]);
+    it('Should not return jwt token', async () => {
+      await request(app).post('/user').send(users[0]);
 
-        const username = users[0].username;
-        const password = users[0].password;
+      const username = users[0].username;
+      const password = users[1].password;
 
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
 
-        const oldRefreshToken =
-          authenticateUserResponse.body.object.refreshToken.id;
+      expect(authenticateUserResponse.status).toEqual(400);
+      expect(authenticateUserResponse.body.message).toEqual(
+        'Username or password incorrect',
+      );
 
-        const refreshTokenResponse = await request(app)
-          .post('/refresh-token')
-          .send(oldRefreshToken);
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
 
-        const newRefreshToken =
-          refreshTokenResponse.body.object.refreshToken.id;
+    it('Should not return jwt token', async () => {
+      await request(app).post('/user').send(users[0]);
 
-        expect(refreshTokenResponse.status).toEqual(200);
-        expect(oldRefreshToken).toEqual(newRefreshToken);
+      const { username, password } = users[4];
 
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
 
-      it('Should return new refresh token', async () => {
-        await request(app).post('/user').send(users[0]);
+      expect(authenticateUserResponse.status).toEqual(400);
+      expect(authenticateUserResponse.body.message).toEqual(
+        'Username should not be empty',
+      );
 
-        const username = users[0].username;
-        const password = users[0].password;
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
 
-        const authenticateUserResponse = await request(app)
-          .post('/login')
-          .send({ username, password });
+    it('Should not return jwt token', async () => {
+      await request(app).post('/user').send(users[0]);
 
-        const oldToken = authenticateUserResponse.body.object.token;
+      const { username, password } = users[6];
 
-        const oldRefreshToken =
-          authenticateUserResponse.body.object.refreshToken.id;
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
 
-        await sleep(20000);
+      expect(authenticateUserResponse.status).toEqual(400);
+      expect(authenticateUserResponse.body.message).toEqual(
+        'Password should not be empty',
+      );
 
-        const refreshTokenResponse = await request(app)
-          .post('/refresh-token')
-          .send(oldRefreshToken);
-
-        const newRefreshToken =
-          refreshTokenResponse.body.object.refreshToken.id;
-
-        const newToken = refreshTokenResponse.body.object.token;
-
-        expect(refreshTokenResponse.status).toEqual(200);
-        expect(newToken).not.toEqual(oldToken);
-        expect(oldRefreshToken).not.toEqual(newRefreshToken);
-
-        await prisma.refreshToken.deleteMany();
-        await prisma.user.deleteMany();
-      });
-
-      it('Should not return refresh token', async () => {
-        const refreshTokenResponse = await request(app)
-          .post('/refresh-token')
-          .send('refresh-token-invalid');
-
-        expect(refreshTokenResponse.status).toEqual(400);
-        expect(refreshTokenResponse.body.message).toEqual(
-          'Refresh token invalid',
-        );
-      });
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
     });
   });
-}
+
+  describe('/user/:user_id (PUT) (middleware)', () => {
+    it('Should return message of token invalid', async () => {
+      const userData = {
+        username: users[0].username,
+        password: users[0].password,
+      };
+
+      await request(app).post('/user').send(users[0]);
+
+      const saveUserResponse2 = await request(app).post('/user').send(users[1]);
+
+      const userId = saveUserResponse2.body.object.id;
+
+      const username = users[0].username;
+      const password = users[0].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const token = authenticateUserResponse.body.object.token;
+
+      const editUserResponse = await request(app)
+        .put(`/user/${userId}`)
+        .auth(token, { type: 'bearer' })
+        .send(userData);
+
+      expect(editUserResponse.status).toEqual(400);
+      expect(editUserResponse.body.message).toEqual('Token invalid');
+
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
+
+    it('Should return message of token is missing', async () => {
+      const userData = {
+        username: users[0].username,
+        password: users[0].password,
+      };
+
+      const saveUserResponse = await request(app).post('/user').send(users[0]);
+
+      const userId = saveUserResponse.body.object.id;
+
+      const editUserResponse = await request(app)
+        .put(`/user/${userId}`)
+        .send(userData);
+      expect(editUserResponse.status).toEqual(401);
+      expect(editUserResponse.body.message).toEqual('Token is missing');
+
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
+  });
+
+  describe('/refresh-token (POST)', () => {
+    it('Should return refresh token', async () => {
+      await request(app).post('/user').send(users[0]);
+
+      const username = users[0].username;
+      const password = users[0].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const oldRefreshToken =
+        authenticateUserResponse.body.object.refreshToken.id;
+
+      const refreshTokenResponse = await request(app)
+        .post('/refresh-token')
+        .send(oldRefreshToken);
+
+      const newRefreshToken = refreshTokenResponse.body.object.refreshToken.id;
+
+      expect(refreshTokenResponse.status).toEqual(200);
+      expect(oldRefreshToken).toEqual(newRefreshToken);
+
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
+
+    it('Should return new refresh token', async () => {
+      await request(app).post('/user').send(users[0]);
+
+      const username = users[0].username;
+      const password = users[0].password;
+
+      const authenticateUserResponse = await request(app)
+        .post('/login')
+        .send({ username, password });
+
+      const oldToken = authenticateUserResponse.body.object.token;
+
+      const oldRefreshToken =
+        authenticateUserResponse.body.object.refreshToken.id;
+
+      await sleep(20000);
+
+      const refreshTokenResponse = await request(app)
+        .post('/refresh-token')
+        .send(oldRefreshToken);
+
+      const newRefreshToken = refreshTokenResponse.body.object.refreshToken.id;
+
+      const newToken = refreshTokenResponse.body.object.token;
+
+      expect(refreshTokenResponse.status).toEqual(200);
+      expect(newToken).not.toEqual(oldToken);
+      expect(oldRefreshToken).not.toEqual(newRefreshToken);
+
+      await prisma.refreshToken.deleteMany();
+      await prisma.user.deleteMany();
+    });
+
+    it('Should not return refresh token', async () => {
+      const refreshTokenResponse = await request(app)
+        .post('/refresh-token')
+        .send('refresh-token-invalid');
+
+      expect(refreshTokenResponse.status).toEqual(400);
+      expect(refreshTokenResponse.body.message).toEqual(
+        'Refresh token invalid',
+      );
+    });
+  });
+});

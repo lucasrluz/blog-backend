@@ -34,6 +34,6 @@
   },
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
-    "start:test": "jest"
+    "start:test": "jest --runInBand"
   }
 }
