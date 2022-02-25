@@ -11,44 +11,44 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  username String @unique
-  email String @unique
-  password String
-  post Post[]
+  id           String        @id @default(uuid())
+  username     String        @unique
+  email        String        @unique
+  password     String
+  post         Post[]
   refreshToken RefreshToken?
-  comment Comment[]
+  comment      Comment[]
 
   @@map("user")
 }
 
 model RefreshToken {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
   expiresIn Int
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id])
 
   @@map("refresh_token")
 }
 
 model Post {
-  id String @id @default(uuid())
-  title String
+  id      String    @id @default(uuid())
+  title   String
   content String
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  userId  String
+  user    User      @relation(fields: [userId], references: [id])
   comment Comment[]
 
   @@map("post")
 }
 
 model Comment {
-  id String @id @default(uuid())
+  id      String @id @default(uuid())
   content String
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  postId String
-  post Post @relation(fields: [postId], references: [id])
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  postId  String
+  post    Post   @relation(fields: [postId], references: [id])
 
   @@map("comment")
 }
