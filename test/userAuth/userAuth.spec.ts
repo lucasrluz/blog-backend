@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../src/app';
+import { app } from '../../src/infra/external/express/app';
 import { prisma } from '../../src/prisma/prisma';
 import { users } from '../user/data/users';
 import { sleep } from './methods/sleep';

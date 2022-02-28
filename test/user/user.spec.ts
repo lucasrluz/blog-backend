@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { saveUserRepository } from '../../src/api/user/repositories/saveUserRepository';
-import { app } from '../../src/app';
+import { app } from '../../src/infra/external/express/app';
 import { prisma } from '../../src/prisma/prisma';
 import { users } from './data/users';
 
