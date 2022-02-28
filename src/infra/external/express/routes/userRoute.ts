@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
-import { deleteUserController } from '../../../../api/user/controllers/deleteUserController';
-import { editUserController } from '../../../../api/user/controllers/editUserController';
-import { findUserController } from '../../../../api/user/controllers/findUserController';
-import { saveUserController } from '../../../../api/user/controllers/saveUserController';
+import { deleteUserController } from '../../../controllers/user/deleteUserController';
+import { editUserController } from '../../../controllers/user/editUserController';
+import { findUserController } from '../../../controllers/user/findUserController';
+import { saveUserController } from '../../../controllers/user/saveUserController';
 
 export const userRoute = Router();
 

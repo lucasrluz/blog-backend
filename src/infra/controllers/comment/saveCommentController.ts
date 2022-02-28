@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { saveCommentService } from '../service/saveCommentService';
+import { saveCommentService } from '../../../api/comment/service/saveCommentService';
 
 export async function saveCommentController(req: Request, res: Response) {
   const { user_id: userId } = req.params;

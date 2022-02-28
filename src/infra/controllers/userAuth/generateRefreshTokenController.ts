@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { generateRefreshTokenService } from '../service/generateRefreshTokenService';
+import { generateRefreshTokenService } from '../../../api/userAuth/service/generateRefreshTokenService';
 
 export async function generateRefreshTokenController(
   req: Request,

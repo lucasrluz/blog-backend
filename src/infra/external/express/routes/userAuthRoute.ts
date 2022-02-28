@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { authenticateUserController } from '../../../../api/userAuth/controllers/authenticateUserController';
-import { generateRefreshTokenController } from '../../../../api/userAuth/controllers/generateRefreshTokenController';
+import { authenticateUserController } from '../../../controllers/userAuth/authenticateUserController';
+import { generateRefreshTokenController } from '../../../controllers/userAuth/generateRefreshTokenController';
 
 export const userAuthRoute = Router();
 

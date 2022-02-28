@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { deletePostService } from '../services/deletePostService';
+import { deletePostService } from '../../../api/post/services/deletePostService';
 
 export async function deletePostController(req: Request, res: Response) {
   const { post_id: postId } = req.params;

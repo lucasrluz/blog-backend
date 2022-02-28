@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { deletePostController } from '../../../../api/post/controllers/deletePostController';
-import { editPostController } from '../../../../api/post/controllers/editPostController';
-import { findPostByUsernameController } from '../../../../api/post/controllers/findPostByUsernameController';
-import { findPostController } from '../../../../api/post/controllers/findPostController';
-import { savePostController } from '../../../../api/post/controllers/savePostController';
+import { deletePostController } from '../../../controllers/post/deletePostController';
+import { editPostController } from '../../../controllers/post/editPostController';
+import { findPostByUsernameController } from '../../../controllers/post/findPostByUsernameController';
+import { findPostController } from '../../../controllers/post/findPostController';
+import { savePostController } from '../../../controllers/post/savePostController';
 import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
 
 export const postRoute = Router();

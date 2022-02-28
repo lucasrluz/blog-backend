@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { findPostByUsernameService } from '../services/findPostByUsernameService';
+import { findPostByUsernameService } from '../../../api/post/services/findPostByUsernameService';
 
 export async function findPostByUsernameController(
   req: Request,

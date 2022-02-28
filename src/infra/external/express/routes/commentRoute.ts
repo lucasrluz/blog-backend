@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { deleteCommentController } from '../../../../api/comment/controllers/deleteCommentController';
-import { editCommentController } from '../../../../api/comment/controllers/editCommentController';
-import { findCommentByPostController } from '../../../../api/comment/controllers/findCommentByPostController';
-import { saveCommentController } from '../../../../api/comment/controllers/saveCommentController';
+import { deleteCommentController } from '../../../controllers/comment/deleteCommentController';
+import { editCommentController } from '../../../controllers/comment/editCommentController';
+import { findCommentByPostController } from '../../../controllers/comment/findCommentByPostController';
+import { saveCommentController } from '../../../controllers/comment/saveCommentController';
 import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
 
 export const commentRoute = Router();
