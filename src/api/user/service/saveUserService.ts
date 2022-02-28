@@ -1,9 +1,11 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
 import { IUser } from '../interface/IUser';
-import { findUserByEmailRepository } from '../repositories/findUserByEmailRepository';
-import { findUserByUsernameRepository } from '../repositories/findUserByUsernameRepository';
 import { hash } from 'bcrypt';
-import { saveUserRepository } from '../repositories/saveUserRepository';
+import {
+  findUserByEmailRepository,
+  findUserByUsernameRepository,
+  saveUserRepository,
+} from '../../../infra/external/prisma/repositories/userRepository';
 import { validateUser } from '../classValidator/validateUser';
 
 export async function saveUserService(user: IUser) {

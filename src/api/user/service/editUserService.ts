@@ -1,7 +1,9 @@
 import { hash } from 'bcrypt';
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { editUserRepository } from '../repositories/editUserRepository';
-import { findUserByUsernameAndIdRepository } from '../repositories/findUserByUsernameAndIdRepository';
+import {
+  editUserRepository,
+  findUserByUsernameAndIdRepository,
+} from '../../../infra/external/prisma/repositories/userRepository';
 
 export async function editUserService(
   userId: string,

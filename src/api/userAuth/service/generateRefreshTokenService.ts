@@ -1,9 +1,11 @@
 import { generateToken } from '../../../providers/generateToken';
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findRefreshTokenByIdRepository } from '../repositories/findRefreshTokenByIdRepository';
 import dayjs from 'dayjs';
-import { deleteRefreshTokenRepository } from '../repositories/deleteRefreshTokenRepository';
-import { generateRefreshTokenRepository } from '../repositories/generateRefreshTokenRepository';
+import {
+  deleteRefreshTokenRepository,
+  findRefreshTokenByIdRepository,
+  generateRefreshTokenRepository,
+} from '../../../infra/external/prisma/repositories/userAuthRepository';
 
 export async function generateRefreshTokenService(refreshTokenId: string) {
   const existingRefreshToken = await findRefreshTokenByIdRepository(

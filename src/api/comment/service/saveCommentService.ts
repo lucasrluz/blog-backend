@@ -1,8 +1,8 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findPostByPostIdRepository } from '../../post/repositories/findPostByPostIdRepository';
+import { saveCommentRepository } from '../../../infra/external/prisma/repositories/commentRepository';
+import { findPostByPostIdRepository } from '../../../infra/external/prisma/repositories/postRepository';
 import { validateComment } from '../classValidator/validateComment';
 import { IComment } from '../interface/IComment';
-import { saveCommentRepository } from '../repositories/saveCommentRepository';
 
 export async function saveCommentService(comment: IComment) {
   const commentValidation = await validateComment(comment);

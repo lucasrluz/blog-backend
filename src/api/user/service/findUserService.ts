@@ -1,5 +1,5 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findUserByUsernameRepository } from '../repositories/findUserByUsernameRepository';
+import { findUserByUsernameRepository } from '../../../infra/external/prisma/repositories/userRepository';
 
 export async function findUserService(username: string) {
   const existingUser = await findUserByUsernameRepository(username);

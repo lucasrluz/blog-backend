@@ -1,7 +1,9 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
+import {
+  editPostRepository,
+  findPostByPostIdAndUserIdRepository,
+} from '../../../infra/external/prisma/repositories/postRepository';
 import { validatePost } from '../classValidator/validatePost';
-import { editPostRepository } from '../repositories/editPostRepository';
-import { findPostByPostIdAndUserIdRepository } from '../repositories/findPostByPostIdAndUserIdRepository';
 
 export async function editPostService(
   postId: string,

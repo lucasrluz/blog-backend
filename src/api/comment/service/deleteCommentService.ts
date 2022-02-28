@@ -1,6 +1,8 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { deleteCommentRepository } from '../repositories/deleteCommentRepository';
-import { findCommentByCommentIdUserIdRepository } from '../repositories/findCommentByCommentIdUserIdRepository';
+import {
+  deleteCommentRepository,
+  findCommentByCommentIdUserIdRepository,
+} from '../../../infra/external/prisma/repositories/commentRepository';
 
 export async function deleteCommentService(commentId: string, userId: string) {
   const existingComment = await findCommentByCommentIdUserIdRepository(

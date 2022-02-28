@@ -32,6 +32,9 @@
     "jsonwebtoken": "^8.5.1",
     "prisma": "3.5.0"
   },
+  "prisma": {
+    "schema": "src/infra/prisma/schema.prisma"
+  },
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
     "start:test": "jest --runInBand"

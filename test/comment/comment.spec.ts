@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../src/infra/external/express/app';
-import { prisma } from '../../src/prisma/prisma';
+import { prisma } from '../../src/infra/external/prisma/prisma';
 import { posts } from '../post/data/posts';
 import { users } from '../user/data/users';
 import { comments } from './data/comments';

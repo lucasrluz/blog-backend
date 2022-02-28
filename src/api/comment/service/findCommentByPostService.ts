@@ -1,6 +1,6 @@
 import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findPostByPostIdRepository } from '../../post/repositories/findPostByPostIdRepository';
-import { findCommentByPostRepository } from '../repositories/findCommentByPostRepository';
+import { findCommentByPostRepository } from '../../../infra/external/prisma/repositories/commentRepository';
+import { findPostByPostIdRepository } from '../../../infra/external/prisma/repositories/postRepository';
 
 export async function findCommentByPostService(postId: string) {
   const existingPost = await findPostByPostIdRepository(postId);
