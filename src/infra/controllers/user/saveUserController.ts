@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { saveUserService } from '../../../api/user/service/saveUserService';
+import { saveUserService } from '../../../services/user/saveUserService';
 
 export async function saveUserController(req: Request, res: Response) {
   const { username, email, password } = req.body;

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { editUserService } from '../../../api/user/service/editUserService';
+import { editUserService } from '../../../services/user/editUserService';
 
 export async function editUserController(req: Request, res: Response) {
   const userId = req.params.user_id;

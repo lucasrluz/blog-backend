@@ -1,12 +1,12 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
-import { IUser } from '../interface/IUser';
+import { apiResponse } from '../../apiResponse/apiResponse';
 import { hash } from 'bcrypt';
+import { IUser } from '../../api/user/interface/IUser';
+import { validateUser } from '../../api/user/classValidator/validateUser';
 import {
   findUserByEmailRepository,
   findUserByUsernameRepository,
   saveUserRepository,
-} from '../../../infra/external/prisma/repositories/userRepository';
-import { validateUser } from '../classValidator/validateUser';
+} from '../../infra/external/prisma/repositories/userRepository';
 
 export async function saveUserService(user: IUser) {
   const { username, email, password } = user;

@@ -1,11 +1,11 @@
 import { compare } from 'bcrypt';
-import { generateToken } from '../../../providers/generateToken';
-import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findUserByUsernameRepository } from '../../../infra/external/prisma/repositories/userRepository';
+import { generateToken } from '../../providers/generateToken';
+import { apiResponse } from '../../apiResponse/apiResponse';
+import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 import {
   deleteRefreshTokenRepository,
   generateRefreshTokenRepository,
-} from '../../../infra/external/prisma/repositories/userAuthRepository';
+} from '../../infra/external/prisma/repositories/userAuthRepository';
 
 export async function authenticateUserService(
   username: string,

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { savePostService } from '../../../api/post/services/savePostService';
+import { savePostService } from '../../../services/post/savePostService';
 
 export async function savePostController(req: Request, res: Response) {
   const userId = req.params.user_id;

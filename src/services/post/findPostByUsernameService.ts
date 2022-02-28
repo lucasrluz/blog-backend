@@ -1,6 +1,6 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
-import { findPostByUsernameRepository } from '../../../infra/external/prisma/repositories/postRepository';
-import { findUserByUsernameRepository } from '../../../infra/external/prisma/repositories/userRepository';
+import { apiResponse } from '../../apiResponse/apiResponse';
+import { findPostByUsernameRepository } from '../../infra/external/prisma/repositories/postRepository';
+import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 
 export async function findPostByUsernameService(username: string) {
   const existingUser = await findUserByUsernameRepository(username);

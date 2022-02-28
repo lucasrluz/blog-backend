@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { editPostService } from '../../../api/post/services/editPostService';
+import { editPostService } from '../../../services/post/editPostService';
 
 export async function editPostController(req: Request, res: Response) {
   const { post_id: postId, user_id: userId } = req.params;

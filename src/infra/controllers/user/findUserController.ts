@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { findUserService } from '../../../api/user/service/findUserService';
+import { findUserService } from '../../../services/user/findUserService';
 
 export async function findUserController(req: Request, res: Response) {
   const username = req.params.username;

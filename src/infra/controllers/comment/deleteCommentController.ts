@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { deleteCommentService } from '../../../api/comment/service/deleteCommentService';
+import { deleteCommentService } from '../../../services/comment/deleteCommentService';
 
 export async function deleteCommentController(req: Request, res: Response) {
   const { user_id: userId, comment_id: commentId } = req.params;

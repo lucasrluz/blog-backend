@@ -1,8 +1,8 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
+import { apiResponse } from '../../apiResponse/apiResponse';
 import {
   editCommentRepository,
   findCommentByUserIdPostIdCommentIdRepository,
-} from '../../../infra/external/prisma/repositories/commentRepository';
+} from '../../infra/external/prisma/repositories/commentRepository';
 
 export async function editCommentService(
   commentId: string,

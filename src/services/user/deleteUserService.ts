@@ -1,5 +1,5 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
-import { deleteUserRepository } from '../../../infra/external/prisma/repositories/userRepository';
+import { apiResponse } from '../../apiResponse/apiResponse';
+import { deleteUserRepository } from '../../infra/external/prisma/repositories/userRepository';
 
 export async function deleteUserService(userId: string) {
   await deleteUserRepository(userId);

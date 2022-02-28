@@ -1,8 +1,8 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
+import { apiResponse } from '../../apiResponse/apiResponse';
 import {
   deletePostRepository,
   findPostByPostIdRepository,
-} from '../../../infra/external/prisma/repositories/postRepository';
+} from '../../infra/external/prisma/repositories/postRepository';
 
 export async function deletePostService(postId: string) {
   const existingPost = await findPostByPostIdRepository(postId);

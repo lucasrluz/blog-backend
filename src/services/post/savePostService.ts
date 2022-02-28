@@ -1,7 +1,7 @@
-import { apiResponse } from '../../../apiResponse/apiResponse';
-import { savePostRepository } from '../../../infra/external/prisma/repositories/postRepository';
-import { validatePost } from '../classValidator/validatePost';
-import { IPost } from '../interface/IPost';
+import { validatePost } from '../../api/post/classValidator/validatePost';
+import { IPost } from '../../api/post/interface/IPost';
+import { apiResponse } from '../../apiResponse/apiResponse';
+import { savePostRepository } from '../../infra/external/prisma/repositories/postRepository';
 
 export async function savePostService(post: IPost) {
   const postValidation = await validatePost(post);

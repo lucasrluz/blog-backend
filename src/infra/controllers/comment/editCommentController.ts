@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { editCommentService } from '../../../api/comment/service/editCommentService';
+import { editCommentService } from '../../../services/comment/editCommentService';
 
 export async function editCommentController(req: Request, res: Response) {
   const {
