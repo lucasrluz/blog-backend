@@ -1,5 +1,5 @@
 import { validatePost } from '../../domain/post/classValidator/validatePost';
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import {
   editPostRepository,
   findPostByPostIdAndUserIdRepository,

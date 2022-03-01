@@ -1,4 +1,4 @@
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 
 export async function findUserService(username: string) {

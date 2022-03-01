@@ -1,6 +1,6 @@
 import { validateComment } from '../../domain/comment/classValidator/validateComment';
 import { IComment } from '../../domain/comment/interface/IComment';
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { saveCommentRepository } from '../../infra/external/prisma/repositories/commentRepository';
 import { findPostByPostIdRepository } from '../../infra/external/prisma/repositories/postRepository';
 

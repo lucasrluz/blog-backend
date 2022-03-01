@@ -1,4 +1,4 @@
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { findCommentByPostRepository } from '../../infra/external/prisma/repositories/commentRepository';
 import { findPostByPostIdRepository } from '../../infra/external/prisma/repositories/postRepository';
 

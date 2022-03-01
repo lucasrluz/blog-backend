@@ -3,7 +3,7 @@ import {
   editUserRepository,
   findUserByUsernameAndIdRepository,
 } from '../../infra/external/prisma/repositories/userRepository';
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 
 export async function editUserService(
   userId: string,

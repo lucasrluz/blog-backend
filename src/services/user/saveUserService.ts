@@ -1,4 +1,4 @@
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { hash } from 'bcrypt';
 import { IUser } from '../../domain/user/interface/IUser';
 import { validateUser } from '../../domain/user/classValidator/validateUser';

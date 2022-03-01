@@ -1,6 +1,6 @@
 import { validatePost } from '../../domain/post/classValidator/validatePost';
 import { IPost } from '../../domain/post/interface/IPost';
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { savePostRepository } from '../../infra/external/prisma/repositories/postRepository';
 
 export async function savePostService(post: IPost) {

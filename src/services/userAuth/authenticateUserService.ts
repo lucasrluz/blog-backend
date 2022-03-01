@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt';
 import { generateToken } from '../../infra/external/jsonwebtoken/generateToken';
-import { apiResponse } from '../../apiResponse/apiResponse';
+import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 import {
   deleteRefreshTokenRepository,
