@@ -3,7 +3,7 @@ import { deleteCommentController } from '../../../controllers/comment/deleteComm
 import { editCommentController } from '../../../controllers/comment/editCommentController';
 import { findCommentByPostController } from '../../../controllers/comment/findCommentByPostController';
 import { saveCommentController } from '../../../controllers/comment/saveCommentController';
-import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
+import { ensureAuthenticatedUser } from '../../../middleware/ensureAuthenticatedUser';
 
 export const commentRoute = Router();
 

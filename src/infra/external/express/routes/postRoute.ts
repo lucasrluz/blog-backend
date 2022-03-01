@@ -4,7 +4,7 @@ import { editPostController } from '../../../controllers/post/editPostController
 import { findPostByUsernameController } from '../../../controllers/post/findPostByUsernameController';
 import { findPostController } from '../../../controllers/post/findPostController';
 import { savePostController } from '../../../controllers/post/savePostController';
-import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
+import { ensureAuthenticatedUser } from '../../../middleware/ensureAuthenticatedUser';
 
 export const postRoute = Router();
 

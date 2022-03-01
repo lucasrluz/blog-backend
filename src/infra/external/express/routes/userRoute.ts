@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ensureAuthenticatedUser } from '../../../../api/userAuth/middleware/ensureAuthenticatedUser';
+import { ensureAuthenticatedUser } from '../../../middleware/ensureAuthenticatedUser';
 import { deleteUserController } from '../../../controllers/user/deleteUserController';
 import { editUserController } from '../../../controllers/user/editUserController';
 import { findUserController } from '../../../controllers/user/findUserController';
