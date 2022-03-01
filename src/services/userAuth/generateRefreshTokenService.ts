@@ -5,7 +5,7 @@ import {
   findRefreshTokenByIdRepository,
   generateRefreshTokenRepository,
 } from '../../infra/external/prisma/repositories/userAuthRepository';
-import { generateToken } from '../../providers/generateToken';
+import { generateToken } from '../../infra/external/jsonwebtoken/generateToken';
 
 export async function generateRefreshTokenService(refreshTokenId: string) {
   const existingRefreshToken = await findRefreshTokenByIdRepository(

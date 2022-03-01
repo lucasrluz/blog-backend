@@ -1,5 +1,5 @@
 import { compare } from 'bcrypt';
-import { generateToken } from '../../providers/generateToken';
+import { generateToken } from '../../infra/external/jsonwebtoken/generateToken';
 import { apiResponse } from '../../apiResponse/apiResponse';
 import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 import {
