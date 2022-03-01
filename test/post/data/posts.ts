@@ -1,4 +1,4 @@
-import { IPost } from '../../../src/api/post/interface/IPost';
+import { IPost } from '../../../src/domain/post/interface/IPost';
 
 export const posts: IPost[] = [
   {

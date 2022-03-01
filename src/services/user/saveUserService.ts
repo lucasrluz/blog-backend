@@ -1,7 +1,7 @@
 import { apiResponse } from '../../apiResponse/apiResponse';
 import { hash } from 'bcrypt';
-import { IUser } from '../../api/user/interface/IUser';
-import { validateUser } from '../../api/user/classValidator/validateUser';
+import { IUser } from '../../domain/user/interface/IUser';
+import { validateUser } from '../../domain/user/classValidator/validateUser';
 import {
   findUserByEmailRepository,
   findUserByUsernameRepository,

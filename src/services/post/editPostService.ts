@@ -1,4 +1,4 @@
-import { validatePost } from '../../api/post/classValidator/validatePost';
+import { validatePost } from '../../domain/post/classValidator/validatePost';
 import { apiResponse } from '../../apiResponse/apiResponse';
 import {
   editPostRepository,

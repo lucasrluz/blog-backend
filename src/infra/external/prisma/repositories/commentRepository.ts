@@ -1,4 +1,4 @@
-import { IComment } from '../../../../api/comment/interface/IComment';
+import { IComment } from '../../../../domain/comment/interface/IComment';
 import { prisma } from '../prisma';
 
 export async function saveCommentRepository(comment: IComment) {

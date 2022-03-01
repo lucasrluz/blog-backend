@@ -1,4 +1,4 @@
-import { IUser } from '../../../../api/user/interface/IUser';
+import { IUser } from '../../../../domain/user/interface/IUser';
 import { prisma } from '../prisma';
 
 export async function saveUserRepository(user: IUser) {

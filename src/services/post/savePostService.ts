@@ -1,5 +1,5 @@
-import { validatePost } from '../../api/post/classValidator/validatePost';
-import { IPost } from '../../api/post/interface/IPost';
+import { validatePost } from '../../domain/post/classValidator/validatePost';
+import { IPost } from '../../domain/post/interface/IPost';
 import { apiResponse } from '../../apiResponse/apiResponse';
 import { savePostRepository } from '../../infra/external/prisma/repositories/postRepository';
 

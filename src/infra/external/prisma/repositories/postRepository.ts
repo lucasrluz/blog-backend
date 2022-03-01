@@ -1,4 +1,4 @@
-import { IPost } from '../../../../api/post/interface/IPost';
+import { IPost } from '../../../../domain/post/interface/IPost';
 import { prisma } from '../prisma';
 
 export async function savePostRepository(post: IPost) {

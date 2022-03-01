@@ -1,4 +1,4 @@
-import { IUser } from '../../../src/api/user/interface/IUser';
+import { IUser } from '../../../src/domain/user/interface/IUser';
 
 export const users: IUser[] = [
   {
