@@ -1,12 +1,14 @@
-import { Request, Response } from 'express';
 import { editUserService } from '../../../services/user/editUserService';
+import { badRequest, ok } from '../util/response/httpResponse';
 
-export async function editUserController(req: Request, res: Response) {
-  const userId = req.params.user_id;
-
-  const { username, password } = req.body;
-
+export async function editUserController(
+  userId: string,
+  username: string,
+  password: string,
+) {
   const response = await editUserService(userId, { username, password });
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return badRequest(response.value);
+
+  return ok(response.value);
 }

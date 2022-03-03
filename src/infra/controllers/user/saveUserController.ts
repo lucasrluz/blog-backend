@@ -1,16 +1,11 @@
-import { Request, Response } from 'express';
+import { IUser } from '../../../domain/user/interface/IUser';
 import { saveUserService } from '../../../services/user/saveUserService';
+import { badRequest, created } from '../util/response/httpResponse';
 
-export async function saveUserController(req: Request, res: Response) {
-  const { username, email, password } = req.body;
-
-  const user = {
-    username,
-    email,
-    password,
-  };
-
+export async function saveUserController(user: IUser) {
   const response = await saveUserService(user);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return badRequest(response.value);
+
+  return created(response.value);
 }
