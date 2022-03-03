@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import { ensureAuthenticatedUser } from '../../../middleware/ensureAuthenticatedUser';
-import { deleteUserController } from '../../../controllers/user/deleteUserController';
-import { editUserController } from '../../../controllers/user/editUserController';
-import { findUserController } from '../../../controllers/user/findUserController';
-import { saveUserController } from '../../../controllers/user/saveUserController';
+import { editUserAdaptRoute } from './adapters/user/editUserAdaptRoute';
+import { saveUserAdaptRoute } from './adapters/user/saveUserAdaptRoute';
+import { findUserAdaptRoute } from './adapters/user/findUserAdaptRoute';
+import { deleteUserAdaptRoute } from './adapters/user/deleteUserAdaptRoute';
 
 export const userRoute = Router();
 
-userRoute.post('/user', saveUserController);
-userRoute.get('/user/:username', findUserController);
-userRoute.put('/user/:user_id', ensureAuthenticatedUser, editUserController);
+userRoute.post('/user', saveUserAdaptRoute);
+userRoute.get('/user/:username', findUserAdaptRoute);
+userRoute.put('/user/:user_id', ensureAuthenticatedUser, editUserAdaptRoute);
 userRoute.delete(
   '/user/:user_id',
   ensureAuthenticatedUser,
-  deleteUserController,
+  deleteUserAdaptRoute,
 );
