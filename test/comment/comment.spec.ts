@@ -17,7 +17,7 @@ describe('Comment route', () => {
     it('Should save new comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -66,7 +66,7 @@ describe('Comment route', () => {
     it('Should not save comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -111,7 +111,7 @@ describe('Comment route', () => {
     it('Should not save comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -143,7 +143,7 @@ describe('Comment route', () => {
     it('Should not save comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -177,7 +177,7 @@ describe('Comment route', () => {
     it('Should return comments by post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -235,7 +235,7 @@ describe('Comment route', () => {
     it('Should not return comments', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -293,7 +293,7 @@ describe('Comment route', () => {
     it('Should not return comments', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -332,7 +332,7 @@ describe('Comment route', () => {
     it('Should return edited comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -390,7 +390,7 @@ describe('Comment route', () => {
     it('Should not edited comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -441,7 +441,7 @@ describe('Comment route', () => {
     it('Should not edited comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -494,7 +494,7 @@ describe('Comment route', () => {
     it('Should not edited comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -551,7 +551,7 @@ describe('Comment route', () => {
     it('Should deleted comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -602,7 +602,7 @@ describe('Comment route', () => {
     it('Should not deleted comment', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 

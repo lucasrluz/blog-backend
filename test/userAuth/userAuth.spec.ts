@@ -116,7 +116,7 @@ describe('User auth route', () => {
 
       const saveUserResponse2 = await request(app).post('/user').send(users[1]);
 
-      const userId = saveUserResponse2.body.object.id;
+      const userId = saveUserResponse2.body.id;
 
       const username = users[0].username;
       const password = users[0].password;
@@ -147,7 +147,7 @@ describe('User auth route', () => {
 
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)

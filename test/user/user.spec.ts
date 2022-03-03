@@ -16,13 +16,9 @@ describe('User route', () => {
     it('Should save new user', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
+      const { username, email } = saveUserResponse.body;
+
       expect(saveUserResponse.status).toEqual(201);
-      expect(saveUserResponse.body.message).toEqual(
-        'Successfully registered user',
-      );
-
-      const { username, email } = saveUserResponse.body.object;
-
       expect(username).toEqual(users[0].username);
       expect(email).toEqual(users[0].email);
 
@@ -35,9 +31,7 @@ describe('User route', () => {
       const saveUserResponse = await request(app).post('/user').send(users[2]);
 
       expect(saveUserResponse.status).toEqual(400);
-      expect(saveUserResponse.body.message).toEqual(
-        'This username is already in use',
-      );
+      expect(saveUserResponse.body).toEqual('This username is already in use');
 
       await prisma.user.deleteMany();
     });
@@ -48,9 +42,7 @@ describe('User route', () => {
       const saveUserResponse = await request(app).post('/user').send(users[3]);
 
       expect(saveUserResponse.status).toEqual(400);
-      expect(saveUserResponse.body.message).toEqual(
-        'This e-mail is already in use',
-      );
+      expect(saveUserResponse.body).toEqual('This e-mail is already in use');
 
       await prisma.user.deleteMany();
     });
@@ -59,9 +51,7 @@ describe('User route', () => {
       const saveUserResponse = await request(app).post('/user').send(users[4]);
 
       expect(saveUserResponse.status).toEqual(400);
-      expect(saveUserResponse.body.message).toEqual(
-        'Username should not be empty',
-      );
+      expect(saveUserResponse.body).toEqual('Username should not be empty');
 
       await prisma.user.deleteMany();
     });
@@ -70,7 +60,7 @@ describe('User route', () => {
       const saveUserResponse = await request(app).post('/user').send(users[5]);
 
       expect(saveUserResponse.status).toEqual(400);
-      expect(saveUserResponse.body.message).toEqual('Email must be an email');
+      expect(saveUserResponse.body).toEqual('Email must be an email');
 
       await prisma.user.deleteMany();
     });
@@ -79,9 +69,7 @@ describe('User route', () => {
       const saveUserResponse = await request(app).post('/user').send(users[6]);
 
       expect(saveUserResponse.status).toEqual(400);
-      expect(saveUserResponse.body.message).toEqual(
-        'Password should not be empty',
-      );
+      expect(saveUserResponse.body).toEqual('Password should not be empty');
     });
   });
 
@@ -94,7 +82,7 @@ describe('User route', () => {
       );
 
       expect(findUserResponse.status).toEqual(200);
-      expect(findUserResponse.body.object).toEqual({
+      expect(findUserResponse.body).toEqual({
         username: users[0].username,
       });
 
@@ -107,7 +95,7 @@ describe('User route', () => {
       );
 
       expect(findUserResponse.status).toEqual(404);
-      expect(findUserResponse.body.message).toEqual('User not found');
+      expect(findUserResponse.body).toEqual('User not found');
     });
   });
 
@@ -120,7 +108,7 @@ describe('User route', () => {
 
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const username = users[0].username;
       const password = users[0].password;
@@ -137,8 +125,7 @@ describe('User route', () => {
         .send(userData);
 
       expect(editUserResponse.status).toEqual(200);
-      expect(editUserResponse.body.message).toEqual('Successfully edited user');
-      expect(editUserResponse.body.object).toEqual({
+      expect(editUserResponse.body).toEqual({
         id: userId,
         username: userData.username,
         email: users[0].email,
@@ -158,7 +145,7 @@ describe('User route', () => {
 
       const saveUserResponse = await request(app).post('/user').send(users[1]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const username = users[1].username;
       const password = users[1].password;
@@ -175,9 +162,7 @@ describe('User route', () => {
         .send(userData);
 
       expect(editUserResponse.status).toEqual(400);
-      expect(editUserResponse.body.message).toEqual(
-        'This username is already in use',
-      );
+      expect(editUserResponse.body).toEqual('This username is already in use');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -191,7 +176,7 @@ describe('User route', () => {
 
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const username = users[0].username;
       const password = users[0].password;
@@ -208,9 +193,7 @@ describe('User route', () => {
         .send(userData);
 
       expect(editUserResponse.status).toEqual(400);
-      expect(editUserResponse.body.message).toEqual(
-        'Username should not be empty',
-      );
+      expect(editUserResponse.body).toEqual('Username should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -224,7 +207,7 @@ describe('User route', () => {
 
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const username = users[0].username;
       const password = users[0].password;
@@ -241,9 +224,7 @@ describe('User route', () => {
         .send(userData);
 
       expect(editUserResponse.status).toEqual(400);
-      expect(editUserResponse.body.message).toEqual(
-        'Password should not be empty',
-      );
+      expect(editUserResponse.body).toEqual('Password should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -254,7 +235,7 @@ describe('User route', () => {
     it('Should deleted user', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const username = users[0].username;
       const password = users[0].password;
@@ -272,9 +253,7 @@ describe('User route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(deleteUserResponse.status).toEqual(200);
-      expect(deleteUserResponse.body.message).toEqual(
-        'User deleted successfully',
-      );
+      expect(deleteUserResponse.body).toEqual('User deleted successfully');
     });
   });
 });

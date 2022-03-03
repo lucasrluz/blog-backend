@@ -16,7 +16,7 @@ describe('Post route', () => {
     it('Should save new post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -47,7 +47,7 @@ describe('Post route', () => {
     it('Should not save post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -79,7 +79,7 @@ describe('Post route', () => {
     it('Should not save post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -111,7 +111,7 @@ describe('Post route', () => {
     it('Should not save post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -145,7 +145,7 @@ describe('Post route', () => {
     it('Should return post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -187,7 +187,7 @@ describe('Post route', () => {
     it('Should not return post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -224,7 +224,7 @@ describe('Post route', () => {
     it('Should not return post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -263,7 +263,7 @@ describe('Post route', () => {
     it('Should return posts by username', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -330,7 +330,7 @@ describe('Post route', () => {
     it('Should return post edited', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -378,7 +378,7 @@ describe('Post route', () => {
     it('Should not edited post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -423,7 +423,7 @@ describe('Post route', () => {
     it('Should not edited post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -468,7 +468,7 @@ describe('Post route', () => {
     it('Should not edited post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -500,7 +500,7 @@ describe('Post route', () => {
     it('Should deleted post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
@@ -538,7 +538,7 @@ describe('Post route', () => {
     it('Should deleted post', async () => {
       const saveUserResponse = await request(app).post('/user').send(users[0]);
 
-      const userId = saveUserResponse.body.object.id;
+      const userId = saveUserResponse.body.id;
 
       const { username, password } = users[0];
 
