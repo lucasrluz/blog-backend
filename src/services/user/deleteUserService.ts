@@ -1,8 +1,8 @@
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { deleteUserRepository } from '../../infra/external/prisma/repositories/userRepository';
+import { success } from '../../shared/response';
 
 export async function deleteUserService(userId: string) {
   await deleteUserRepository(userId);
 
-  return apiResponse(200, { message: 'User deleted successfully' });
+  return success('User deleted successfully');
 }

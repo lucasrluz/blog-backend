@@ -3,7 +3,7 @@ import {
   editUserRepository,
   findUserByUsernameAndIdRepository,
 } from '../../infra/external/prisma/repositories/userRepository';
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
+import { error, success } from '../../shared/response';
 
 export async function editUserService(
   userId: string,
@@ -11,19 +11,16 @@ export async function editUserService(
 ) {
   const { username, password } = data;
 
-  if (!username)
-    return apiResponse(400, { message: 'Username should not be empty' });
+  if (!username) return error('Username should not be empty');
 
-  if (!password)
-    return apiResponse(400, { message: 'Password should not be empty' });
+  if (!password) return error('Password should not be empty');
 
   const existingUser = await findUserByUsernameAndIdRepository(
     username,
     userId,
   );
 
-  if (existingUser)
-    return apiResponse(400, { message: 'This username is already in use' });
+  if (existingUser) return error('This username is already in use');
 
   const passwordHash = await hash(password, 8);
 
@@ -32,12 +29,9 @@ export async function editUserService(
     password: passwordHash,
   });
 
-  return apiResponse(200, {
-    message: 'Successfully edited user',
-    object: {
-      id: editUserResponse.id,
-      username: editUserResponse.username,
-      email: editUserResponse.email,
-    },
+  return success({
+    id: editUserResponse.id,
+    username: editUserResponse.username,
+    email: editUserResponse.email,
   });
 }
