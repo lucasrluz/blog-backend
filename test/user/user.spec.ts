@@ -117,7 +117,7 @@ describe('User route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)
@@ -154,7 +154,7 @@ describe('User route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)
@@ -185,7 +185,7 @@ describe('User route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)
@@ -216,7 +216,7 @@ describe('User route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)
@@ -244,7 +244,7 @@ describe('User route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       await prisma.refreshToken.deleteMany();
 

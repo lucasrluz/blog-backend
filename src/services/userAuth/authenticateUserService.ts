@@ -1,31 +1,27 @@
 import { compare } from 'bcrypt';
 import { generateToken } from '../../infra/external/jsonwebtoken/generateToken';
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { findUserByUsernameRepository } from '../../infra/external/prisma/repositories/userRepository';
 import {
   deleteRefreshTokenRepository,
   generateRefreshTokenRepository,
 } from '../../infra/external/prisma/repositories/userAuthRepository';
+import { error, success } from '../../shared/response';
 
 export async function authenticateUserService(
   username: string,
   password: string,
 ) {
-  if (!username)
-    return apiResponse(400, { message: 'Username should not be empty' });
+  if (!username) return error('Username should not be empty');
 
-  if (!password)
-    return apiResponse(400, { message: 'Password should not be empty' });
+  if (!password) return error('Password should not be empty');
 
   const existingUser = await findUserByUsernameRepository(username);
 
-  if (!existingUser)
-    return apiResponse(400, { message: 'Username or password incorrect' });
+  if (!existingUser) return error('Username or password incorrect');
 
   const passwordMatch = await compare(password, existingUser.password);
 
-  if (!passwordMatch)
-    return apiResponse(400, { message: 'Username or password incorrect' });
+  if (!passwordMatch) return error('Username or password incorrect');
 
   const token = generateToken(existingUser.id);
 
@@ -33,5 +29,5 @@ export async function authenticateUserService(
 
   const refreshToken = await generateRefreshTokenRepository(existingUser.id);
 
-  return apiResponse(200, { object: { token, refreshToken } });
+  return success({ token, refreshToken });
 }

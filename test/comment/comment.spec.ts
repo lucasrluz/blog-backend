@@ -25,7 +25,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -74,7 +74,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -119,7 +119,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const commentData = {
         content: comments[0].content,
@@ -151,7 +151,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const commentData = {
         content: comments[0].content,
@@ -185,7 +185,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -243,7 +243,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -301,7 +301,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -340,7 +340,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -398,7 +398,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -449,7 +449,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -502,7 +502,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -559,7 +559,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -610,7 +610,7 @@ describe('Comment route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const deleteCommentResponse = await request(app)
         .delete(`/comment/${'commentIdInvalid'}/${userId}`)

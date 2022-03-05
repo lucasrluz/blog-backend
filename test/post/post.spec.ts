@@ -24,7 +24,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -55,7 +55,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[2].title,
@@ -87,7 +87,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[3].title,
@@ -119,7 +119,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[4].title,
@@ -153,7 +153,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -195,7 +195,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -232,7 +232,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -271,7 +271,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData1 = {
         title: posts[0].title,
@@ -338,7 +338,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData1 = {
         title: posts[0].title,
@@ -386,7 +386,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData1 = {
         title: posts[0].title,
@@ -431,7 +431,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData1 = {
         title: posts[0].title,
@@ -476,7 +476,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData2 = {
         title: posts[0].title,
@@ -508,7 +508,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const postData = {
         title: posts[0].title,
@@ -546,7 +546,7 @@ describe('Post route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const deletePostResponse = await request(app)
         .delete(`/post/${userId}/${'postIdInvalid'}`)

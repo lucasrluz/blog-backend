@@ -1,13 +1,10 @@
-import { Request, Response } from 'express';
 import { generateRefreshTokenService } from '../../../services/userAuth/generateRefreshTokenService';
+import { badRequest, ok } from '../util/response/httpResponse';
 
-export async function generateRefreshTokenController(
-  req: Request,
-  res: Response,
-) {
-  const { refreshToken } = req.body;
+export async function generateRefreshTokenController(refreshTokenId: string) {
+  const response = await generateRefreshTokenService(refreshTokenId);
 
-  const response = await generateRefreshTokenService(refreshToken);
+  if (response.isError()) return badRequest(response.value);
 
-  res.status(response.status).json(response.data);
+  return ok(response.value);
 }

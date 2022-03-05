@@ -1,10 +1,13 @@
-import { Request, Response } from 'express';
 import { authenticateUserService } from '../../../services/userAuth/authenticateUserService';
+import { badRequest, ok } from '../util/response/httpResponse';
 
-export async function authenticateUserController(req: Request, res: Response) {
-  const { username, password } = req.body;
-
+export async function authenticateUserController(
+  username: string,
+  password: string,
+) {
   const response = await authenticateUserService(username, password);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return badRequest(response.value);
+
+  return ok(response.value);
 }

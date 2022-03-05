@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { authenticateUserController } from '../../../controllers/userAuth/authenticateUserController';
-import { generateRefreshTokenController } from '../../../controllers/userAuth/generateRefreshTokenController';
+import { authenticateUserAdaptRoute } from './adapters/userAuth/authenticateUserAdaptRoute';
+import { generateRefreshTokenAdaptRoute } from './adapters/userAuth/generateRefreshTokenAdaptRoute';
 
 export const userAuthRoute = Router();
 
-userAuthRoute.post('/login', authenticateUserController);
-userAuthRoute.post('/refresh-token', generateRefreshTokenController);
+userAuthRoute.post('/login', authenticateUserAdaptRoute);
+userAuthRoute.post('/refresh-token', generateRefreshTokenAdaptRoute);

@@ -41,7 +41,7 @@ describe('User auth route', () => {
         .send({ username, password });
 
       expect(authenticateUserResponse.status).toEqual(400);
-      expect(authenticateUserResponse.body.message).toEqual(
+      expect(authenticateUserResponse.body).toEqual(
         'Username or password incorrect',
       );
 
@@ -60,7 +60,7 @@ describe('User auth route', () => {
         .send({ username, password });
 
       expect(authenticateUserResponse.status).toEqual(400);
-      expect(authenticateUserResponse.body.message).toEqual(
+      expect(authenticateUserResponse.body).toEqual(
         'Username or password incorrect',
       );
 
@@ -78,7 +78,7 @@ describe('User auth route', () => {
         .send({ username, password });
 
       expect(authenticateUserResponse.status).toEqual(400);
-      expect(authenticateUserResponse.body.message).toEqual(
+      expect(authenticateUserResponse.body).toEqual(
         'Username should not be empty',
       );
 
@@ -96,7 +96,7 @@ describe('User auth route', () => {
         .send({ username, password });
 
       expect(authenticateUserResponse.status).toEqual(400);
-      expect(authenticateUserResponse.body.message).toEqual(
+      expect(authenticateUserResponse.body).toEqual(
         'Password should not be empty',
       );
 
@@ -125,7 +125,7 @@ describe('User auth route', () => {
         .post('/login')
         .send({ username, password });
 
-      const token = authenticateUserResponse.body.object.token;
+      const token = authenticateUserResponse.body.token;
 
       const editUserResponse = await request(app)
         .put(`/user/${userId}`)
@@ -171,14 +171,13 @@ describe('User auth route', () => {
         .post('/login')
         .send({ username, password });
 
-      const oldRefreshToken =
-        authenticateUserResponse.body.object.refreshToken.id;
+      const oldRefreshToken = authenticateUserResponse.body.refreshToken.id;
 
       const refreshTokenResponse = await request(app)
         .post('/refresh-token')
         .send(oldRefreshToken);
 
-      const newRefreshToken = refreshTokenResponse.body.object.refreshToken.id;
+      const newRefreshToken = refreshTokenResponse.body.refreshToken.id;
 
       expect(refreshTokenResponse.status).toEqual(200);
       expect(oldRefreshToken).toEqual(newRefreshToken);
@@ -197,10 +196,9 @@ describe('User auth route', () => {
         .post('/login')
         .send({ username, password });
 
-      const oldToken = authenticateUserResponse.body.object.token;
+      const oldToken = authenticateUserResponse.body.token;
 
-      const oldRefreshToken =
-        authenticateUserResponse.body.object.refreshToken.id;
+      const oldRefreshToken = authenticateUserResponse.body.refreshToken.id;
 
       await sleep(20000);
 
@@ -208,9 +206,9 @@ describe('User auth route', () => {
         .post('/refresh-token')
         .send(oldRefreshToken);
 
-      const newRefreshToken = refreshTokenResponse.body.object.refreshToken.id;
+      const newRefreshToken = refreshTokenResponse.body.refreshToken.id;
 
-      const newToken = refreshTokenResponse.body.object.token;
+      const newToken = refreshTokenResponse.body.token;
 
       expect(refreshTokenResponse.status).toEqual(200);
       expect(newToken).not.toEqual(oldToken);
@@ -226,9 +224,7 @@ describe('User auth route', () => {
         .send('refresh-token-invalid');
 
       expect(refreshTokenResponse.status).toEqual(400);
-      expect(refreshTokenResponse.body.message).toEqual(
-        'Refresh token invalid',
-      );
+      expect(refreshTokenResponse.body).toEqual('Refresh token invalid');
     });
   });
 });

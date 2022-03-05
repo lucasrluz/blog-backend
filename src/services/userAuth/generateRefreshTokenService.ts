@@ -1,19 +1,18 @@
 import dayjs from 'dayjs';
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import {
   deleteRefreshTokenRepository,
   findRefreshTokenByIdRepository,
   generateRefreshTokenRepository,
 } from '../../infra/external/prisma/repositories/userAuthRepository';
 import { generateToken } from '../../infra/external/jsonwebtoken/generateToken';
+import { error, success } from '../../shared/response';
 
 export async function generateRefreshTokenService(refreshTokenId: string) {
   const existingRefreshToken = await findRefreshTokenByIdRepository(
     refreshTokenId,
   );
 
-  if (!existingRefreshToken)
-    return apiResponse(400, { message: 'Refresh token invalid' });
+  if (!existingRefreshToken) return error('Refresh token invalid');
 
   const token = generateToken(existingRefreshToken.userId);
 
@@ -28,10 +27,8 @@ export async function generateRefreshTokenService(refreshTokenId: string) {
       existingRefreshToken.userId,
     );
 
-    return apiResponse(200, { object: { token, refreshToken } });
+    return success({ token, refreshToken });
   }
 
-  return apiResponse(200, {
-    object: { token, refreshToken: existingRefreshToken },
-  });
+  return success({ token, refreshToken: existingRefreshToken });
 }
