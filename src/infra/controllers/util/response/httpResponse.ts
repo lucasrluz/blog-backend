@@ -19,6 +19,13 @@ export function badRequest(value: any) {
   };
 }
 
+export function unauthorized(value: any) {
+  return {
+    value,
+    statusCode: 401,
+  };
+}
+
 export function notFound(value: any) {
   return {
     value,
