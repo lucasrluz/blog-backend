@@ -1,10 +1,13 @@
-import { Request, Response } from 'express';
 import { deleteCommentService } from '../../../services/comment/deleteCommentService';
+import { notFound, ok } from '../util/response/httpResponse';
 
-export async function deleteCommentController(req: Request, res: Response) {
-  const { user_id: userId, comment_id: commentId } = req.params;
-
+export async function deleteCommentController(
+  userId: string,
+  commentId: string,
+) {
   const response = await deleteCommentService(commentId, userId);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return notFound(response.value);
+
+  return ok(response.value);
 }

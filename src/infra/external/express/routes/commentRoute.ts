@@ -1,29 +1,29 @@
 import { Router } from 'express';
-import { deleteCommentController } from '../../../controllers/comment/deleteCommentController';
-import { editCommentController } from '../../../controllers/comment/editCommentController';
-import { findCommentByPostController } from '../../../controllers/comment/findCommentByPostController';
-import { saveCommentController } from '../../../controllers/comment/saveCommentController';
 import { ensureAuthenticatedUser } from '../../../middleware/ensureAuthenticatedUser';
+import { deleteCommentAdaptRoute } from './adapters/comment/deleteCommentAdaptRoute';
+import { editCommentAdaptRoute } from './adapters/comment/editCommentAdaptRoute';
+import { findCommentByPostAdaptRoute } from './adapters/comment/findCommentByPostAdapRoute';
+import { saveCommentAdaptRoute } from './adapters/comment/saveCommentAdaptRoute';
 
 export const commentRoute = Router();
 
 commentRoute.post(
   '/comment/:user_id',
   ensureAuthenticatedUser,
-  saveCommentController,
+  saveCommentAdaptRoute,
 );
 commentRoute.get(
   '/comment/:user_id/:post_id',
   ensureAuthenticatedUser,
-  findCommentByPostController,
+  findCommentByPostAdaptRoute,
 );
 commentRoute.put(
   '/comment/:comment_id/:user_id/:post_id',
   ensureAuthenticatedUser,
-  editCommentController,
+  editCommentAdaptRoute,
 );
 commentRoute.delete(
   '/comment/:comment_id/:user_id',
   ensureAuthenticatedUser,
-  deleteCommentController,
+  deleteCommentAdaptRoute,
 );

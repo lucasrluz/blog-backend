@@ -50,8 +50,8 @@ describe('Comment route', () => {
         .send(commentData);
 
       expect(saveCommentResponse.status).toEqual(201);
-      expect(saveCommentResponse.body.object).toEqual({
-        id: saveCommentResponse.body.object.id,
+      expect(saveCommentResponse.body).toEqual({
+        id: saveCommentResponse.body.id,
         content: commentData.content,
         userId,
         postId,
@@ -99,9 +99,7 @@ describe('Comment route', () => {
         .send(commentData);
 
       expect(saveCommentResponse.status).toEqual(400);
-      expect(saveCommentResponse.body.message).toEqual(
-        'Content should not be empty',
-      );
+      expect(saveCommentResponse.body).toEqual('Content should not be empty');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -132,9 +130,7 @@ describe('Comment route', () => {
         .send(commentData);
 
       expect(saveCommentResponse.status).toEqual(400);
-      expect(saveCommentResponse.body.message).toEqual(
-        'PostId should not be empty',
-      );
+      expect(saveCommentResponse.body).toEqual('PostId should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -164,7 +160,7 @@ describe('Comment route', () => {
         .send(commentData);
 
       expect(saveCommentResponse.status).toEqual(404);
-      expect(saveCommentResponse.body.message).toEqual('Post not found');
+      expect(saveCommentResponse.body).toEqual('Post not found');
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -224,7 +220,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(findCommentResponse.status).toEqual(200);
-      expect(findCommentResponse.body.object.length).toEqual(2);
+      expect(findCommentResponse.body.length).toEqual(2);
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -282,7 +278,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(findCommentResponse.status).toEqual(404);
-      expect(findCommentResponse.body.message).toEqual('Post not found');
+      expect(findCommentResponse.body).toEqual('Post not found');
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -320,7 +316,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(findCommentResponse.status).toEqual(404);
-      expect(findCommentResponse.body.message).toEqual('Comments not found');
+      expect(findCommentResponse.body).toEqual('Comments not found');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -364,7 +360,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(commentData);
 
-      const commentId = saveCommentResponse.body.object.id;
+      const commentId = saveCommentResponse.body.id;
 
       const content = comments[1].content;
 
@@ -374,8 +370,8 @@ describe('Comment route', () => {
         .send({ content });
 
       expect(editCommentResponse.status).toEqual(200);
-      expect(editCommentResponse.body.object).toEqual({
-        id: saveCommentResponse.body.object.id,
+      expect(editCommentResponse.body).toEqual({
+        id: saveCommentResponse.body.id,
         content: comments[1].content,
         userId,
         postId,
@@ -430,7 +426,7 @@ describe('Comment route', () => {
         .send({ content });
 
       expect(editCommentResponse.status).toEqual(404);
-      expect(editCommentResponse.body.message).toEqual('Comment not found');
+      expect(editCommentResponse.body).toEqual('Comment not found');
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -473,7 +469,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(commentData);
 
-      const commentId = saveCommentResponse.body.object.id;
+      const commentId = saveCommentResponse.body.id;
 
       const content = comments[1].content;
 
@@ -483,7 +479,7 @@ describe('Comment route', () => {
         .send({ content });
 
       expect(editCommentResponse.status).toEqual(404);
-      expect(editCommentResponse.body.message).toEqual('Comment not found');
+      expect(editCommentResponse.body).toEqual('Comment not found');
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -526,7 +522,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(commentData);
 
-      const commentId = saveCommentResponse.body.object.id;
+      const commentId = saveCommentResponse.body.id;
 
       const content = comments[2].content;
 
@@ -536,9 +532,7 @@ describe('Comment route', () => {
         .send({ content });
 
       expect(editCommentResponse.status).toEqual(400);
-      expect(editCommentResponse.body.message).toEqual(
-        'Content should not be empty',
-      );
+      expect(editCommentResponse.body).toEqual('Content should not be empty');
 
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
@@ -583,14 +577,14 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(commentData);
 
-      const commentId = saveCommentResponse.body.object.id;
+      const commentId = saveCommentResponse.body.id;
 
       const deleteCommentResponse = await request(app)
         .delete(`/comment/${commentId}/${userId}`)
         .auth(token, { type: 'bearer' });
 
       expect(deleteCommentResponse.status).toEqual(200);
-      expect(deleteCommentResponse.body.message).toEqual(
+      expect(deleteCommentResponse.body).toEqual(
         'Successfully deleted comment',
       );
 
@@ -617,7 +611,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(deleteCommentResponse.status).toEqual(404);
-      expect(deleteCommentResponse.body.message).toEqual('Comment not found');
+      expect(deleteCommentResponse.body).toEqual('Comment not found');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();

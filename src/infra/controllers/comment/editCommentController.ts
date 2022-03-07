@@ -1,16 +1,19 @@
-import { Request, Response } from 'express';
 import { editCommentService } from '../../../services/comment/editCommentService';
+import { badRequest, notFound, ok } from '../util/response/httpResponse';
 
-export async function editCommentController(req: Request, res: Response) {
-  const {
-    comment_id: commentId,
-    user_id: userId,
-    post_id: postId,
-  } = req.params;
-
-  const { content } = req.body;
-
+export async function editCommentController(
+  commentId: string,
+  userId: string,
+  postId: string,
+  content: string,
+) {
   const response = await editCommentService(commentId, userId, postId, content);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) {
+    if (response.value === 'Comment not found') return notFound(response.value);
+
+    return badRequest(response.value);
+  }
+
+  return ok(response.value);
 }

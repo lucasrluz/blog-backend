@@ -1,11 +1,18 @@
-import { Request, Response } from 'express';
 import { saveCommentService } from '../../../services/comment/saveCommentService';
+import { badRequest, created, notFound } from '../util/response/httpResponse';
 
-export async function saveCommentController(req: Request, res: Response) {
-  const { user_id: userId } = req.params;
-  const { content, postId } = req.body;
-
+export async function saveCommentController(
+  userId: string,
+  content: string,
+  postId: string,
+) {
   const response = await saveCommentService({ content, userId, postId });
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) {
+    if (response.value === 'Post not found') return notFound(response.value);
+
+    return badRequest(response.value);
+  }
+
+  return created(response.value);
 }

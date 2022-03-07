@@ -1,22 +1,21 @@
 import { validateComment } from '../../domain/comment/classValidator/validateComment';
 import { IComment } from '../../domain/comment/interface/IComment';
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import { saveCommentRepository } from '../../infra/external/prisma/repositories/commentRepository';
 import { findPostByPostIdRepository } from '../../infra/external/prisma/repositories/postRepository';
+import { error, success } from '../../shared/response';
 
 export async function saveCommentService(comment: IComment) {
   const commentValidation = await validateComment(comment);
 
-  if (commentValidation)
-    return apiResponse(400, { message: commentValidation });
+  if (commentValidation) return error(commentValidation);
 
   const { postId } = comment;
 
   const existingPost = await findPostByPostIdRepository(postId);
 
-  if (!existingPost) return apiResponse(404, { message: 'Post not found' });
+  if (!existingPost) return error('Post not found');
 
   const saveCommentResponse = await saveCommentRepository(comment);
 
-  return apiResponse(201, { object: saveCommentResponse });
+  return success(saveCommentResponse);
 }

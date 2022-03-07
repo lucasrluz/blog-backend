@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
 import { findCommentByPostService } from '../../../services/comment/findCommentByPostService';
+import { notFound, ok } from '../util/response/httpResponse';
 
-export async function findCommentByPostController(req: Request, res: Response) {
-  const { post_id: postId } = req.params;
-
+export async function findCommentByPostController(postId: string) {
   const response = await findCommentByPostService(postId);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return notFound(response.value);
+
+  return ok(response.value);
 }

@@ -1,8 +1,8 @@
-import { apiResponse } from '../../infra/external/express/response/apiResponse';
 import {
   deleteCommentRepository,
   findCommentByCommentIdUserIdRepository,
 } from '../../infra/external/prisma/repositories/commentRepository';
+import { error, success } from '../../shared/response';
 
 export async function deleteCommentService(commentId: string, userId: string) {
   const existingComment = await findCommentByCommentIdUserIdRepository(
@@ -10,10 +10,9 @@ export async function deleteCommentService(commentId: string, userId: string) {
     userId,
   );
 
-  if (!existingComment)
-    return apiResponse(404, { message: 'Comment not found' });
+  if (!existingComment) return error('Comment not found');
 
   await deleteCommentRepository(commentId);
 
-  return apiResponse(200, { message: 'Successfully deleted comment' });
+  return success('Successfully deleted comment');
 }
