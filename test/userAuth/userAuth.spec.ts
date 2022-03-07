@@ -4,7 +4,7 @@ import { prisma } from '../../src/infra/external/prisma/prisma';
 import { users } from '../user/data/users';
 import { sleep } from './methods/sleep';
 
-jest.setTimeout(60000);
+jest.setTimeout(30000);
 
 describe('User auth route', () => {
   beforeAll(async () => {
@@ -133,7 +133,7 @@ describe('User auth route', () => {
         .send(userData);
 
       expect(editUserResponse.status).toEqual(400);
-      expect(editUserResponse.body.message).toEqual('Token invalid');
+      expect(editUserResponse.body).toEqual('Token invalid');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -153,7 +153,7 @@ describe('User auth route', () => {
         .put(`/user/${userId}`)
         .send(userData);
       expect(editUserResponse.status).toEqual(401);
-      expect(editUserResponse.body.message).toEqual('Token is missing');
+      expect(editUserResponse.body).toEqual('Token is missing');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
