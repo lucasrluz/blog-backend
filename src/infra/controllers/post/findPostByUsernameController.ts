@@ -1,13 +1,10 @@
-import { Request, Response } from 'express';
 import { findPostByUsernameService } from '../../../services/post/findPostByUsernameService';
+import { notFound, ok } from '../util/response/httpResponse';
 
-export async function findPostByUsernameController(
-  req: Request,
-  res: Response,
-) {
-  const { username } = req.params;
-
+export async function findPostByUsernameController(username: string) {
   const response = await findPostByUsernameService(username);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return notFound(response.value);
+
+  return ok(response.value);
 }

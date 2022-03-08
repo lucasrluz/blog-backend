@@ -1,10 +1,14 @@
-import { Request, Response } from 'express';
 import { findPostService } from '../../../services/post/findPostService';
+import { notFound, ok } from '../util/response/httpResponse';
 
-export async function findPostController(req: Request, res: Response) {
-  const { post_id: postId, post_title: title, username } = req.params;
-
+export async function findPostController(
+  postId: string,
+  title: string,
+  username: string,
+) {
   const response = await findPostService(postId, title, username);
 
-  res.status(response.status).json(response.data);
+  if (response.isError()) return notFound(response.value);
+
+  return ok(response.value);
 }

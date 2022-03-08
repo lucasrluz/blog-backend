@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
 import { savePostService } from '../../../services/post/savePostService';
+import { badRequest, created } from '../util/response/httpResponse';
 
-export async function savePostController(req: Request, res: Response) {
-  const userId = req.params.user_id;
-
-  const { title, content } = req.body;
-
+export async function savePostController(
+  userId: string,
+  title: string,
+  content: string,
+) {
   const post = {
     title,
     content,
@@ -14,5 +14,7 @@ export async function savePostController(req: Request, res: Response) {
 
   const response = await savePostService(post);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return badRequest(response.value);
+
+  return created(response.value);
 }

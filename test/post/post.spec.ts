@@ -37,7 +37,7 @@ describe('Post route', () => {
         .send(postData);
 
       expect(savePostResponse.status).toEqual(201);
-      expect(savePostResponse.body.object.title).toEqual(postData.title);
+      expect(savePostResponse.body.title).toEqual(postData.title);
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -68,9 +68,7 @@ describe('Post route', () => {
         .send(postData);
 
       expect(savePostResponse.status).toEqual(400);
-      expect(savePostResponse.body.message).toEqual(
-        'Title should not be empty',
-      );
+      expect(savePostResponse.body).toEqual('Title should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -100,9 +98,7 @@ describe('Post route', () => {
         .send(postData);
 
       expect(savePostResponse.status).toEqual(400);
-      expect(savePostResponse.body.message).toEqual(
-        'Content should not be empty',
-      );
+      expect(savePostResponse.body).toEqual('Content should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -132,9 +128,7 @@ describe('Post route', () => {
         .send(postData);
 
       expect(savePostResponse.status).toEqual(400);
-      expect(savePostResponse.body.message).toEqual(
-        'Title should not be empty',
-      );
+      expect(savePostResponse.body).toEqual('Title should not be empty');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -165,14 +159,14 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const findPostResponse = await request(app).get(
         `/post/${username}/${postData.title}/${postId}`,
       );
 
       expect(findPostResponse.status).toEqual(200);
-      expect(findPostResponse.body.object).toEqual({
+      expect(findPostResponse.body).toEqual({
         id: postId,
         title: postData.title,
         content: postData.content,
@@ -207,14 +201,14 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const findPostResponse = await request(app).get(
         `/post/${users[1].username}/${postData.title}/${postId}`,
       );
 
       expect(findPostResponse.status).toEqual(404);
-      expect(findPostResponse.body.message).toEqual('User not found');
+      expect(findPostResponse.body).toEqual('User not found');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -244,14 +238,14 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const findPostResponse = await request(app).get(
         `/post/${username}/${posts[1].title}/${postId}`,
       );
 
       expect(findPostResponse.status).toEqual(404);
-      expect(findPostResponse.body.message).toEqual('Post not found');
+      expect(findPostResponse.body).toEqual('Post not found');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -296,7 +290,7 @@ describe('Post route', () => {
       const findPostResponse = await request(app).get(`/post/${username}`);
 
       expect(findPostResponse.status).toEqual(200);
-      expect(findPostResponse.body.object.length).toEqual(2);
+      expect(findPostResponse.body.length).toEqual(2);
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -309,7 +303,7 @@ describe('Post route', () => {
       );
 
       expect(findPostResponse.status).toEqual(404);
-      expect(findPostResponse.body.message).toEqual('User not found');
+      expect(findPostResponse.body).toEqual('User not found');
     });
 
     it('Should not return posts', async () => {
@@ -320,7 +314,7 @@ describe('Post route', () => {
       );
 
       expect(findPostResponse.status).toEqual(404);
-      expect(findPostResponse.body.message).toEqual('Posts not found');
+      expect(findPostResponse.body).toEqual('Posts not found');
 
       await prisma.user.deleteMany();
     });
@@ -350,7 +344,7 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData1);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const postData2 = {
         title: posts[1].title,
@@ -363,7 +357,7 @@ describe('Post route', () => {
         .send(postData2);
 
       expect(editPostResponse.status).toEqual(200);
-      expect(editPostResponse.body.object).toEqual({
+      expect(editPostResponse.body).toEqual({
         id: postId,
         title: postData2.title,
         content: postData2.content,
@@ -398,7 +392,7 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData1);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const postData2 = {
         title: posts[2].title,
@@ -411,9 +405,7 @@ describe('Post route', () => {
         .send(postData2);
 
       expect(editPostResponse.status).toEqual(400);
-      expect(editPostResponse.body.message).toEqual(
-        'Title should not be empty',
-      );
+      expect(editPostResponse.body).toEqual('Title should not be empty');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -443,7 +435,7 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData1);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const postData2 = {
         title: posts[3].title,
@@ -456,9 +448,7 @@ describe('Post route', () => {
         .send(postData2);
 
       expect(editPostResponse.status).toEqual(400);
-      expect(editPostResponse.body.message).toEqual(
-        'Content should not be empty',
-      );
+      expect(editPostResponse.body).toEqual('Content should not be empty');
 
       await prisma.post.deleteMany();
       await prisma.refreshToken.deleteMany();
@@ -489,7 +479,7 @@ describe('Post route', () => {
         .send(postData2);
 
       expect(editPostResponse.status).toEqual(404);
-      expect(editPostResponse.body.message).toEqual('Post not found');
+      expect(editPostResponse.body).toEqual('Post not found');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -520,16 +510,14 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const deletePostResponse = await request(app)
         .delete(`/post/${userId}/${postId}`)
         .auth(token, { type: 'bearer' });
 
       expect(deletePostResponse.status).toEqual(200);
-      expect(deletePostResponse.body.message).toEqual(
-        'Post deleted successfully',
-      );
+      expect(deletePostResponse.body).toEqual('Post deleted successfully');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();
@@ -553,7 +541,7 @@ describe('Post route', () => {
         .auth(token, { type: 'bearer' });
 
       expect(deletePostResponse.status).toEqual(404);
-      expect(deletePostResponse.body.message).toEqual('Post not found');
+      expect(deletePostResponse.body).toEqual('Post not found');
 
       await prisma.refreshToken.deleteMany();
       await prisma.user.deleteMany();

@@ -1,12 +1,19 @@
-import { Request, Response } from 'express';
 import { editPostService } from '../../../services/post/editPostService';
+import { badRequest, notFound, ok } from '../util/response/httpResponse';
 
-export async function editPostController(req: Request, res: Response) {
-  const { post_id: postId, user_id: userId } = req.params;
-
-  const { title, content } = req.body;
-
+export async function editPostController(
+  postId: string,
+  userId: string,
+  title: string,
+  content: string,
+) {
   const response = await editPostService(postId, userId, { title, content });
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) {
+    if (response.value === 'Post not found') return notFound(response.value);
+
+    return badRequest(response.value);
+  }
+
+  return ok(response.value);
 }

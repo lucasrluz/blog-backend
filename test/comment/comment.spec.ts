@@ -37,7 +37,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,
@@ -86,7 +86,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[2].content,
@@ -193,7 +193,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData1 = {
         content: comments[0].content,
@@ -251,7 +251,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData1 = {
         content: comments[0].content,
@@ -309,7 +309,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const findCommentResponse = await request(app)
         .get(`/comment/${userId}/${postId}`)
@@ -348,7 +348,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,
@@ -406,7 +406,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,
@@ -457,7 +457,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,
@@ -510,7 +510,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,
@@ -565,7 +565,7 @@ describe('Comment route', () => {
         .auth(token, { type: 'bearer' })
         .send(postData);
 
-      const postId = savePostResponse.body.object.id;
+      const postId = savePostResponse.body.id;
 
       const commentData = {
         content: comments[0].content,

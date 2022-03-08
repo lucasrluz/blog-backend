@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
 import { deletePostService } from '../../../services/post/deletePostService';
+import { notFound, ok } from '../util/response/httpResponse';
 
-export async function deletePostController(req: Request, res: Response) {
-  const { post_id: postId } = req.params;
-
+export async function deletePostController(postId: string) {
   const response = await deletePostService(postId);
 
-  return res.status(response.status).json(response.data);
+  if (response.isError()) return notFound(response.value);
+
+  return ok(response.value);
 }
