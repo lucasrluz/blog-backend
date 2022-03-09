@@ -1,19 +1,19 @@
 import { hash } from 'bcrypt';
 import { IUser } from '../../domain/user/interface/IUser';
-import { validateUser } from '../../domain/user/classValidator/validateUser';
 import {
   findUserByEmailRepository,
   findUserByUsernameRepository,
   saveUserRepository,
 } from '../../infra/external/prisma/repositories/userRepository';
 import { error, success } from '../../shared/response';
+import { User } from '../../domain/user/entity/User';
 
 export async function saveUserService(user: IUser) {
   const { username, email, password } = user;
 
-  const userValidation = await validateUser(user);
+  const userOrError = User.create(user);
 
-  if (userValidation) return error(userValidation);
+  if (userOrError.isError()) return error(userOrError.value);
 
   const existingUserByUsername = await findUserByUsernameRepository(username);
 
