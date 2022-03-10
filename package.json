@@ -33,7 +33,7 @@
     "prisma": "3.5.0"
   },
   "prisma": {
-    "schema": "src/infra/prisma/schema.prisma"
+    "schema": "src/infra/external/prisma/schema.prisma"
   },
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
