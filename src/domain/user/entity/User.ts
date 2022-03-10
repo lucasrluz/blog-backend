@@ -1,13 +1,16 @@
 import { error, success } from '../../../shared/response';
 import { IUser } from '../interface/IUser';
 import { validateUser } from '../validate/validateUser';
+import { Email } from './Email';
+import { Password } from './Password';
+import { Username } from './Username';
 
 export class User {
-  username: string;
-  email: string;
-  password: string;
+  username: Username;
+  email: Email;
+  password: Password;
 
-  private constructor(username: string, email: string, password: string) {
+  private constructor(username: Username, email: Email, password: Password) {
     this.username = username;
     this.email = email;
     this.password = password;
@@ -18,6 +21,12 @@ export class User {
 
     if (successOrError.isError()) return error(successOrError.value);
 
-    return success(new User(user.username, user.email, user.password));
+    return success(
+      new User(
+        successOrError.value.username,
+        successOrError.value.email,
+        successOrError.value.password,
+      ),
+    );
   }
 }
