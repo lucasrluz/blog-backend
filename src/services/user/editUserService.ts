@@ -1,4 +1,6 @@
 import { hash } from 'bcrypt';
+import { Password } from '../../domain/user/entity/Password';
+import { Username } from '../../domain/user/entity/Username';
 import {
   editUserRepository,
   findUserByUsernameAndIdRepository,
@@ -11,9 +13,13 @@ export async function editUserService(
 ) {
   const { username, password } = data;
 
-  if (!username) return error('Username should not be empty');
+  const usernameOrError = Username.create(username);
 
-  if (!password) return error('Password should not be empty');
+  if (usernameOrError.isError()) return error(usernameOrError.value);
+
+  const passwordOrError = Password.create(password);
+
+  if (passwordOrError.isError()) return error(passwordOrError.value);
 
   const existingUser = await findUserByUsernameAndIdRepository(
     username,
