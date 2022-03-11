@@ -6,7 +6,7 @@ import {
   saveUserRepository,
 } from '../../infra/external/prisma/repositories/userRepository';
 import { error, success } from '../../shared/response';
-import { User } from '../../domain/user/entity/User';
+import { User } from '../../domain/user/User';
 
 export async function saveUserService(user: IUser) {
   const { username, email, password } = user;

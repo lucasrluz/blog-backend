@@ -1,6 +1,6 @@
 import { hash } from 'bcrypt';
-import { Password } from '../../domain/user/entity/Password';
-import { Username } from '../../domain/user/entity/Username';
+import { Password } from '../../domain/user/Password';
+import { Username } from '../../domain/user/Username';
 import {
   editUserRepository,
   findUserByUsernameAndIdRepository,

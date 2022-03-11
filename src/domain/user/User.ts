@@ -1,6 +1,6 @@
-import { error, success } from '../../../shared/response';
-import { IUser } from '../interface/IUser';
-import { validateUser } from '../validate/validateUser';
+import { error, success } from '../../shared/response';
+import { IUser } from './interface/IUser';
+import { validateUser } from './validate/validateUser';
 import { Email } from './Email';
 import { Password } from './Password';
 import { Username } from './Username';

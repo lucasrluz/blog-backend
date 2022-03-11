@@ -1,7 +1,7 @@
 import { error, success } from '../../../shared/response';
-import { Email } from '../entity/Email';
-import { Password } from '../entity/Password';
-import { Username } from '../entity/Username';
+import { Email } from '../Email';
+import { Password } from '../Password';
+import { Username } from '../Username';
 import { IUser } from '../interface/IUser';
 
 export function validateUser(user: IUser) {

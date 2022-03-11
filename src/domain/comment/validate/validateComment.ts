@@ -1,7 +1,7 @@
 import { error, success } from '../../../shared/response';
-import { Content } from '../entity/Content';
-import { PostId } from '../entity/PostId';
-import { UserId } from '../entity/UserId';
+import { Content } from '../Content';
+import { PostId } from '../PostId';
+import { UserId } from '../UserId';
 import { IComment } from '../interface/IComment';
 
 export function validateComment(comment: IComment) {

@@ -1,6 +1,6 @@
-import { error, success } from '../../../shared/response';
-import { IPost } from '../interface/IPost';
-import { validatePost } from '../validate/validatePost';
+import { error, success } from '../../shared/response';
+import { IPost } from './interface/IPost';
+import { validatePost } from './validate/validatePost';
 
 export class Post {
   title: string;

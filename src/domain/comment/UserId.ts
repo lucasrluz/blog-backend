@@ -1,5 +1,5 @@
-import { error, success } from '../../../shared/response';
-import { validateUserId } from '../validate/validations/validateUserId';
+import { error, success } from '../../shared/response';
+import { validateUserId } from './validate/validations/validateUserId';
 
 export class UserId {
   value: string;

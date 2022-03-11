@@ -1,5 +1,5 @@
-import { error, success } from '../../../shared/response';
-import { validatePassword } from '../validate/validations/validatePassword';
+import { error, success } from '../../shared/response';
+import { validatePassword } from './validate/validations/validatePassword';
 
 export class Password {
   value: string;

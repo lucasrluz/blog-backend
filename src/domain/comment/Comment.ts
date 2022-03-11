@@ -1,6 +1,6 @@
-import { error, success } from '../../../shared/response';
-import { IComment } from '../interface/IComment';
-import { validateComment } from '../validate/validateComment';
+import { error, success } from '../../shared/response';
+import { IComment } from './interface/IComment';
+import { validateComment } from './validate/validateComment';
 import { Content } from './Content';
 import { PostId } from './PostId';
 import { UserId } from './UserId';
