@@ -1,4 +1,4 @@
-import { validatePost } from '../../domain/post/validate/validatePost';
+import { Post } from '../../domain/post/Post';
 import {
   editPostRepository,
   findPostByPostIdAndUserIdRepository,
@@ -21,7 +21,7 @@ export async function editPostService(
     userId,
   };
 
-  const postOrError = validatePost(post);
+  const postOrError = Post.create(post);
 
   if (postOrError.isError()) return error(postOrError.value);
 

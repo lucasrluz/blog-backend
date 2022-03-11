@@ -1,3 +1,4 @@
+import { Content } from '../../domain/comment/Content';
 import {
   editCommentRepository,
   findCommentByUserIdPostIdCommentIdRepository,
@@ -18,7 +19,9 @@ export async function editCommentService(
 
   if (!existingComment) return error('Comment not found');
 
-  if (!content) return error('Content should not be empty');
+  const contentOrError = Content.create(content);
+
+  if (contentOrError.isError()) return error(contentOrError.value);
 
   const editCommentResponse = await editCommentRepository(commentId, content);
 
