@@ -1,13 +1,16 @@
 import { error, success } from '../../../shared/response';
 import { IComment } from '../interface/IComment';
 import { validateComment } from '../validate/validateComment';
+import { Content } from './Content';
+import { PostId } from './PostId';
+import { UserId } from './UserId';
 
 export class Comment {
-  content: string;
-  userId: string;
-  postId: string;
+  content: Content;
+  userId: UserId;
+  postId: PostId;
 
-  private constructor(content: string, userId: string, postId: string) {
+  private constructor(content: Content, userId: UserId, postId: PostId) {
     this.content = content;
     this.userId = userId;
     this.postId = postId;
@@ -19,7 +22,11 @@ export class Comment {
     if (successOrError.isError()) return error(successOrError.value);
 
     return success(
-      new Comment(comment.content, comment.userId, comment.postId),
+      new Comment(
+        successOrError.value.content,
+        successOrError.value.userId,
+        successOrError.value.postId,
+      ),
     );
   }
 }
