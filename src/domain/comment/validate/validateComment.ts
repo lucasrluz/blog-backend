@@ -1,12 +1,23 @@
 import { error, success } from '../../../shared/response';
+import { Content } from '../entity/Content';
+import { PostId } from '../entity/PostId';
+import { UserId } from '../entity/UserId';
 import { IComment } from '../interface/IComment';
 
 export function validateComment(comment: IComment) {
-  if (!comment.content) return error('Content should not be empty');
+  const contentOrError = Content.create(comment.content);
+  const userIdOrError = UserId.create(comment.userId);
+  const postIdOrError = PostId.create(comment.postId);
 
-  if (!comment.userId) return error('UserId should not be empty');
+  if (contentOrError.isError()) return error(contentOrError.value);
 
-  if (!comment.postId) return error('PostId should not be empty');
+  if (userIdOrError.isError()) return error(userIdOrError.value);
 
-  return success(comment);
+  if (postIdOrError.isError()) return error(postIdOrError.value);
+
+  return success({
+    content: contentOrError.value,
+    userId: userIdOrError.value,
+    postId: postIdOrError.value,
+  });
 }
