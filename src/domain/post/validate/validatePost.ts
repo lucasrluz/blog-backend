@@ -1,12 +1,21 @@
 import { error, success } from '../../../shared/response';
+import { Content } from '../../comment/Content';
+import { UserId } from '../../comment/UserId';
 import { IPost } from '../interface/IPost';
+import { Title } from '../Title';
 
 export function validatePost(post: IPost) {
-  if (!post.title) return error('Title should not be empty');
+  const titleOrError = Title.create(post.title);
+  const contentOrError = Content.create(post.content);
+  const userIdOrError = UserId.create(post.userId);
 
-  if (!post.content) return error('Content should not be empty');
+  if (titleOrError.isError()) return error(titleOrError.value);
+  if (contentOrError.isError()) return error(contentOrError.value);
+  if (userIdOrError.isError()) return error(userIdOrError.value);
 
-  if (!post.userId) return error('UserId should not be empty');
-
-  return success(post);
+  return success({
+    title: titleOrError.value,
+    content: contentOrError.value,
+    userId: userIdOrError.value,
+  });
 }
