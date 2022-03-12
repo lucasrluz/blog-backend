@@ -1,13 +1,16 @@
 import { error, success } from '../../shared/response';
+import { Content } from '../comment/Content';
+import { UserId } from '../comment/UserId';
 import { IPost } from './interface/IPost';
+import { Title } from './Title';
 import { validatePost } from './validate/validatePost';
 
 export class Post {
-  title: string;
-  content: string;
-  userId: string;
+  title: Title;
+  content: Content;
+  userId: UserId;
 
-  private constructor(title: string, content: string, userId: string) {
+  private constructor(title: Title, content: Content, userId: UserId) {
     this.title = title;
     this.content = content;
     this.userId = userId;
@@ -18,6 +21,12 @@ export class Post {
 
     if (successOrError.isError()) return error(successOrError.value);
 
-    return success(new Post(post.title, post.content, post.userId));
+    return success(
+      new Post(
+        successOrError.value.title,
+        successOrError.value.content,
+        successOrError.value.userId,
+      ),
+    );
   }
 }
