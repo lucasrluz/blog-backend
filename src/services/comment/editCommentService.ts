@@ -1,4 +1,4 @@
-import { Content } from '../../domain/comment/Content';
+import { Content } from '../../domain/shared/Content';
 import {
   editCommentRepository,
   findCommentByUserIdPostIdCommentIdRepository,

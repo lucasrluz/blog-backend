@@ -1,7 +1,7 @@
 import { error, success } from '../../shared/response';
-import { validateUserId } from './validate/validations/validateUserId';
+import { validateContent } from './validations/validateContent';
 
-export class UserId {
+export class Content {
   value: string;
 
   private constructor(value: string) {
@@ -9,10 +9,10 @@ export class UserId {
   }
 
   public static create(value: string) {
-    const successOrError = validateUserId(value);
+    const successOrError = validateContent(value);
 
     if (successOrError.isError()) return error(successOrError.value);
 
-    return success(new UserId(value));
+    return success(new Content(value));
   }
 }

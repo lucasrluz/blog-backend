@@ -1,6 +1,6 @@
 import { error, success } from '../../../shared/response';
-import { Content } from '../../comment/Content';
-import { UserId } from '../../comment/UserId';
+import { Content } from '../../shared/Content';
+import { UserId } from '../../shared/UserId';
 import { IPost } from '../interface/IPost';
 import { Title } from '../Title';
 

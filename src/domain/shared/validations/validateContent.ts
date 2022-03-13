@@ -1,4 +1,4 @@
-import { error, success } from '../../../../shared/response';
+import { error, success } from '../../../shared/response';
 
 export function validateContent(content: string) {
   if (!content) return error('Content should not be empty');
